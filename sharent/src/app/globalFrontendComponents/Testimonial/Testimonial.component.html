@@ -1,0 +1,27 @@
+<div class="block-space bg-secondary" >
+	<!-- Info Section -->
+	<div class="block-head text-center mb-5">
+		<h2 class="head-line display-3"> {{Title}} </h2>
+		<div class="col-12 col-md-7 mx-auto">
+			<p class="lead mt-2 head-desc">{{Desc}}</p>
+		</div>
+	</div>
+	<!-- Info Section / End -->
+	<!-- Categories Carousel -->
+	<div class="fullwidth-carousel-container margin-top-20">
+		<ngx-slick class="testimonial-carousel testimonials" #slickModal="slick-modal" [config]="slideConfig">
+          <div ngxSlickItem class="fw-carousel-review" *ngFor="let testimonial of Data">
+              	<div class="testimonial-box">
+						<div class="testimonial">{{testimonial.message}}</div>
+					</div>
+					<div class="testimonial-author">
+						<img src="{{testimonial.image}}" alt="">
+						<h4>{{testimonial.name}} <span>{{testimonial.position}}</span></h4>
+					</div>
+          </div>
+      </ngx-slick>
+	</div>
+	<!-- Categories Carousel / End -->
+</div>
+
+

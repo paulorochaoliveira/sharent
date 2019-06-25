@@ -1,0 +1,6 @@
+
+<ngx-slick class="listing-slider mfp-gallery-container margin-bottom-0" #slickModal="slick-modal" [config]="slideConfig">
+    <div ngxSlickItem *ngFor="let gallery of Data">
+         <a  [ngStyle]="{'background-image': 'url(../../' + gallery.image + ')'}"  class="item mfp-gallery" title="Title 1"></a>
+    </div>
+</ngx-slick>

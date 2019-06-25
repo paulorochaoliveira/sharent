@@ -1,0 +1,42 @@
+<div class="block-space bg-secondary">
+    <div class="container">
+       <div class="block-head text-center mb-5">
+          <h2 class="head-line display-3">
+             {{Title}}
+          </h2>
+          <p class="lead mt-2 head-desc text-primary">{{Desc}}</p>
+       </div>
+       <div class="row">
+          <div class="col-md-12">
+               <ngx-slick class="simple-slick-carousel dots-nav" #slickModal="slick-modal" [config]="slideConfig">
+                   <div ngxSlickItem class="carousel-item" *ngFor="let place of Data">
+                       <div class="category-box-container text-center">
+                           <div class="listing-item-container">
+                         <div class="listing-item text-center">
+                            <div class="mostviewed-bg" [style.background]="'url(' + place.image + ')'">
+                               <!-- <div class="listing-badge now-open">{{place.badge}}</div> -->
+                               <div class="listing-item-content">
+                                  <div class="list-logo">
+                                   <a [routerLink]="['/listing/detail/version1']" >  <img src="{{place.logo}}" width="80" height="80" alt=""></a>
+                                  </div>
+                                  <span class="badge badge-pill badge-primary text-uppercase category-banner">{{place.category}}</span>
+                                  <!-- <span class="tag">{{place.category}}</span> -->
+                                  <a [routerLink]="['/listing/detail/version1']" >  <h3>{{place.title}} </h3></a>
+                                  <p class="mb-0"> <small> {{place.address}}</small></p>
+                                  <span class="badge badge-pill badge-primary text-uppercase open-close-banner">{{place.badge}}</span>
+                               </div>
+                               <!-- <span class="like-icon"></span> -->
+                               <span class="round-pill like-banner d-block bg-primary"><i class="fa fa-heart-o"></i></span>
+                               <!-- <span class="round-pill rate-banner  d-block bg-primary">9/10</span> -->
+                            </div>
+                         </div>
+                        </div>
+                       </div>
+                   </div>
+               </ngx-slick>
+          </div>
+       </div>
+    </div>
+ </div>
+ 
+ 
