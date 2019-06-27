@@ -2,7 +2,7 @@ const express = require('express');
 const path = require("path");
 const bodyParser = require("body-parser");
 
-// const postsRoutes = require("./routes/posts");
+const productRoutes = require("./routes/products");
 const userRoutes = require("./routes/users");
 
 const app = express();
@@ -24,7 +24,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.use("/api/posts", postsRoutes);
+app.use("/api/product", productRoutes);
 app.use("/api/user", userRoutes);
 
 module.exports = app;

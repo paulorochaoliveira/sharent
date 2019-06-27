@@ -16,10 +16,10 @@ users.post('/register', (req, res) => {
 
   const userData = {
     first_name: req.body.first_name,
-        last_name: req.body.last_name,
-        email: req.body.email,
-        password: req.body.password,
-        created_at: today
+    last_name: req.body.last_name,
+    email: req.body.email,
+    password: req.body.password,
+    created_at: today
   };
   
   User.findOne({
@@ -77,7 +77,7 @@ users.post('/login', (req, res, next) => {
       }
       const token = jwt.sign(
         { email: fetchedUser.email, userId: fetchedUser.id },
-        process.env.SECRET_KEY,
+        process.env.JWT_KEY,
         { expiresIn: "1h" }
       );
       res.status(200).json({
@@ -98,7 +98,7 @@ users.post('/login', (req, res, next) => {
 
 
 users.get('/profile', (req, res) => {
-  var decoded = jwt.verify(req.headers['authorization'], process.env.SECRET_KEY)
+  var decoded = jwt.verify(req.headers['authorization'], process.env.JWT_KEY)
 
   User.findOne({
     where: {
