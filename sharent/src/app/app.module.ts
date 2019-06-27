@@ -2,9 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule, Http } from '@angular/http';
-import { HttpClientModule, HttpClient} from '@angular/common/http';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { DropzoneModule } from 'ngx-dropzone-wrapper';
 import { DROPZONE_CONFIG } from 'ngx-dropzone-wrapper';
 import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
@@ -25,6 +25,7 @@ import { AdminSidebarComponent } from './core/AdminSidebar/AdminSidebar.componen
 
 import { MenuItems } from './core/Menu/menu-items';
 import { AdminMenuItems } from './core/AdminHeader/admin-menu-items';
+import { AuthInterceptor } from './session/auth-interceptor';
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
    // Change this to your upload POST address:
@@ -52,6 +53,8 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
       BrowserModule,
       BrowserAnimationsModule,
       DropzoneModule,
+      FormsModule,
+      ReactiveFormsModule,
       RouterModule.forRoot(AppRoutes),
       HttpModule,
       HttpClientModule
@@ -59,10 +62,8 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   providers: [
       MenuItems, 
       AdminMenuItems,
-      {
-        provide: DROPZONE_CONFIG,
-        useValue: DEFAULT_DROPZONE_CONFIG
-      }
+      { provide: DROPZONE_CONFIG, useValue: DEFAULT_DROPZONE_CONFIG },
+      { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

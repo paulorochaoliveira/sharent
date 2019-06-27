@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { DropzoneModule } from 'ngx-dropzone-wrapper';
 import { DROPZONE_CONFIG } from 'ngx-dropzone-wrapper';
 import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AdminDashboardlComponent } from './Dashboard/AdminDashboard.component';
 import { MessagesComponent } from './Messages/Messages.component';
@@ -28,6 +29,8 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   imports: [
     CommonModule,
     DropzoneModule,
+    FormsModule,
+    ReactiveFormsModule,
     RouterModule.forChild(AdminRoutes),
   ],
   declarations: [ 

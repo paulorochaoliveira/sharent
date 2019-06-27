@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AgmCoreModule } from '@agm/core';
@@ -36,11 +37,13 @@ import { GlobalModule } from '../globalFrontendComponents/global.module';
     CommonModule,
     GlobalModule,
     SlickModule.forRoot(),
+    ReactiveFormsModule,
+    FormsModule,
     NouisliderModule,
     AgmCoreModule.forRoot({apiKey: 'AIzaSyBtdO5k6CRntAMJCF-H5uZjTCoSGX95cdk'}),
     RouterModule.forChild(ListingRoutes),
   ],
-  declarations: [ 
+  declarations: [
      ListWithSidebarComponent,
      ListFullWidthComponent,
      ListFullWidthMapComponent,
