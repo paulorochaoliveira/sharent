@@ -11,44 +11,46 @@ const BACKEND_URL = environment.apiUrl + '/product/';
 
 @Injectable({ providedIn: 'root' })
 export class ProductsService {
-  private posts: Product[] = [];
-  private postsUpdated = new Subject<{ posts: Product[]; postCount: number }>();
+  private products: Product[] = [];
+  private productsUpdated = new Subject<{ products: Product[]; maxProducts: number }>();
 
   constructor(private http: HttpClient, private router: Router) {}
 
   getProducts(productsPerPage: number, currentPage: number) {
     const queryParams = `?pagesize=${productsPerPage}&page=${currentPage}`;
     this.http
-      .get<{ message: string; posts: any; maxPosts: number }>(
+      .get<{ message: string; products: any; maxProducts: number }>(
         BACKEND_URL + queryParams
       )
       .pipe(
-        map(postData => {
+        map(productData => {
           return {
-            posts: postData.posts.map(post => {
+            message: productData.message,
+            products: productData.products.map(product => {
               return {
-                title: post.title,
-                content: post.content,
-                id: post._id,
-                imagePath: post.imagePath,
-                creator: post.creator
+                product_name: product.product_name,
+                description: product.description,
+                id: product.id,
+                price: product.price,
+                imagePath: product.imagePath,
+                userId: product.userId
               };
             }),
-            maxPosts: postData.maxPosts
+            maxProducts: productData.maxProducts
           };
         })
       )
-      .subscribe(transformedPostData => {
-        this.posts = transformedPostData.posts;
-        this.postsUpdated.next({
-          posts: [...this.posts],
-          postCount: transformedPostData.maxPosts
+      .subscribe(transformedProductData => {
+        this.products = transformedProductData.products;
+        this.productsUpdated.next({
+          products: [...this.products],
+          maxProducts: transformedProductData.maxProducts
         });
       });
   }
 
   getProductUpdateListener() {
-    return this.postsUpdated.asObservable();
+    return this.productsUpdated.asObservable();
   }
 
   getProduct(id: string) {

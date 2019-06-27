@@ -50,18 +50,18 @@
                <!-- Sorting - Filtering Section / End -->
                <div class="row">
                   <!-- Listing Item -->
-                  <div class="col-lg-4 col-md-6 grid-layout-list" *ngFor="let list of Data">
+                  <div class="col-lg-4 col-md-6 grid-layout-list" *ngFor="let product of products">
                      <div  class="listing-item-container compact">
                         <div class="listing-item mb-4">
-                           <a [routerLink]="['/listing/detail/version2']"> <img src="{{list.image}}" alt=""></a>
-                           <span class="badge badge-pill badge-primary text-uppercase">{{list.badge}}</span>
+                           <a [routerLink]="['/listing/detail/version2']"> <img src="{{product.imagePath}}" alt=""></a>
+                           <span class="badge badge-pill badge-primary text-uppercase">Now Open</span>
                            <div class="listing-item-content">
-                              <span class="badge badge-pill badge-primary text-uppercase">{{list.category}}</span>
-                              <DirectlistRating [rate]="list.rating"></DirectlistRating>
+                              <span class="badge badge-pill badge-primary text-uppercase"> Eletronique</span>
+                              <DirectlistRating [rate]="5"></DirectlistRating>
                               <a [routerLink]="['/listing/detail/version2']">
-                                 <h3>{{list.title}}</h3>
+                                 <h3>{{product.product_name}}</h3>
                               </a>
-                              <span> <small>{{list.address}}</small> </span>
+                              <span> <small>Cambuci 272 Cordeiro</small> </span>
                            </div>
                            <span class="round-pill like-banner d-block bg-primary"><i class="fa fa-heart-o"></i></span>
                         </div>
@@ -71,7 +71,9 @@
                </div>
                <!-- Pagination -->
                <div class="clearfix"></div>
-               <pagination></pagination>
+               
+               <mat-paginator [length]="totalProducts" [pageSize]="productsPerPage" [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)" *ngIf="products.length > 0"></mat-paginator>
+               <!-- <pagination></pagination> -->
                <!-- Pagination / End -->
             </div>
          </div>

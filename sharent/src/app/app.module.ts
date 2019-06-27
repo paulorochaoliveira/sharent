@@ -26,6 +26,7 @@ import { AdminSidebarComponent } from './core/AdminSidebar/AdminSidebar.componen
 import { MenuItems } from './core/Menu/menu-items';
 import { AdminMenuItems } from './core/AdminHeader/admin-menu-items';
 import { AuthInterceptor } from './session/auth-interceptor';
+import { AngularMaterialModule } from './angular-material.module';
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
    // Change this to your upload POST address:
@@ -57,7 +58,8 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
       ReactiveFormsModule,
       RouterModule.forRoot(AppRoutes),
       HttpModule,
-      HttpClientModule
+      HttpClientModule,
+      AngularMaterialModule
   ],
   providers: [
       MenuItems, 

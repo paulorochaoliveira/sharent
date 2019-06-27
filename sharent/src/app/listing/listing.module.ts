@@ -30,6 +30,7 @@ import { SidebarLayoutThreeComponent } from './SidebarLayoutThree/SidebarLayoutT
 import { ListingRoutes } from './listing.routing';
 
 import { GlobalModule } from '../globalFrontendComponents/global.module';
+import { AngularMaterialModule } from '../angular-material.module';
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import { GlobalModule } from '../globalFrontendComponents/global.module';
     NouisliderModule,
     AgmCoreModule.forRoot({apiKey: 'AIzaSyBtdO5k6CRntAMJCF-H5uZjTCoSGX95cdk'}),
     RouterModule.forChild(ListingRoutes),
+    AngularMaterialModule
   ],
   declarations: [
      ListWithSidebarComponent,
