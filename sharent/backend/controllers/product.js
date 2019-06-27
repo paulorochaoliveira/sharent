@@ -57,31 +57,64 @@ exports.updateProduct = (req, res, next) => {
     });
 };
 
+// exports.getProducts = (req, res, next) => {
+//   const pageSize = +req.query.pagesize;
+//   const currentPage = +req.query.page;
+//   const porductQuery = Product.findAll();
+//   let fetchedProducts;
+//   if (pageSize && currentPage) {
+//     porductQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
+//   }
+//   postQuery
+//     .then(documents => {
+//       fetchedProducts = documents;
+//       return Post.count();
+//     })
+//     .then(count => {
+//       res.status(200).json({
+//         message: "Posts fetched successfully!",
+//         products: fetchedProducts,
+//         maxProducts: count
+//       });
+//     })
+//     .catch(error => {
+//       res.status(500).json({
+//         message: "Fetching posts failed!"
+//       });
+//     });
+// };
+
 exports.getProducts = (req, res, next) => {
-  const pageSize = +req.query.pagesize;
-  const currentPage = +req.query.page;
-  const porductQuery = Product.findAll();
-  let fetchedPosts;
-  if (pageSize && currentPage) {
-    porductQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
-  }
-  postQuery
-    .then(documents => {
-      fetchedPosts = documents;
-      return Post.count();
-    })
-    .then(count => {
-      res.status(200).json({
-        message: "Posts fetched successfully!",
-        posts: fetchedPosts,
-        maxPosts: count
+  let limit = +req.query.pagesize;   // number of records per page
+  let offset = 0;
+  let count = 0;
+  Product.findAndCountAll()
+    .then((data) => {
+      let page = +req.query.page;      // page number
+      
+      count = data.count;
+      console.log(count);
+      // let pages = Math.ceil(data.count / limit);
+		  offset = limit * (page - 1);
+      Product.findAll({
+        // attributes: ['id', 'first_name', 'last_name', 'date_of_birth'],
+        limit: limit,
+        offset: offset,
+        $sort: { id: 1 }
+      })
+      .then((fetchedProducts) => {
+        res.status(200).json({
+          message: "Posts fetched successfully!",
+          products: fetchedProducts, 
+          maxProducts: count
+        });
       });
-    })
-    .catch(error => {
-      res.status(500).json({
-        message: "Fetching posts failed!"
-      });
+  })
+  .catch(function (error) {
+		res.status(500).json({
+      message: "Fetching posts failed!"
     });
+	});
 };
 
 exports.getProduct = (req, res, next) => {
