@@ -2,9 +2,9 @@
     <div class="container">
         <div class="block-head text-center mb-5">
             <h2 class="head-line display-3">
-                {{Title}}
+                Catégories les plus populaires
             </h2>
-            <p class="lead mt-2 head-desc text-primary">{{Desc}}</p>
+            <p class="lead mt-2 head-desc text-primary">Recherchez par catégories d'objets</p>
         </div>
     </div>
     <!-- Categories Carousel -->
@@ -19,7 +19,7 @@
                                 <div class="icon-title">
                                     <i class="{{item.icon}}"></i>
                                 </div>
-                              <a [routerLink]="['/listing/grid/with-sidebar']">  <h3>{{item.title}}</h3></a>
+                              <a [routerLink]="['/listing/list/full-width']">  <h3>{{item.title}}</h3></a>
                                 <span> <small>{{item.subTitle}}</small> </span>
                             </div>
                             <div class="category-box-background" [ngStyle]="{'background-image': 'url(' + item.image + ')'}">

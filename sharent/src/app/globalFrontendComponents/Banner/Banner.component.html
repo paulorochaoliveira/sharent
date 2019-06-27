@@ -17,30 +17,31 @@
       </div>
       <div class="container shape-container d-flex align-items-center py-lg">
          <div class="main-search-inner">
-            <h2 class="text-white display-2">{{Title}}</h2>
-            <h4 class="text-white">{{Desc}}</h4>
+            <h2 class="text-white display-2">Trouvez l'objet dont vous avez besoin</h2>
+            <h4 class="text-white">C'est facile et gratuit !</h4>
             <div class="main-search-input">
                <div class="main-search-input-item">
-                  <input type="text" placeholder="What are you looking for?" value="" />
+                  <input type="text" placeholder="Que recherchez-vous?" value="" />
                </div>
                <div class="main-search-input-item location">
                   <div id="autocomplete-container">
-                     <input id="autocomplete-input" type="text" placeholder="Location">
+                     <input id="autocomplete-input" type="text" placeholder="Lieu">
                   </div>
                   <a href="#"><i class="fa fa-map-marker"></i></a>
                </div>
                <div class="main-search-input-item">
-                  <select data-placeholder="All Categories" class="chosen-select custom-select">
-                     <option>All Categories</option>
-                     <option>Shops</option>
-                     <option>Hotels</option>
-                     <option>Restaurants</option>
-                     <option>Fitness</option>
-                     <option>Events</option>
+                  <select data-placeholder="Toutes les catégories" class="chosen-select custom-select">
+                     <option>Par catégorie</option>
+                     <option>Jardin</option>
+                     <option>Rénovation</option>
+                     <option>Décoration</option>
+                     <option>Sport</option>
+                     <option>Mécanique</option>
+                     
                   </select>
                </div>
                <a href="#" class="btn main-search-btn btn-radius btn-lg btn-white" [routerLink]="['/listing/list/with-sidebar']">
-               <span class="btn-inner--text">Search</span>
+               <span class="btn-inner--text">Recherche</span>
                </a>
             </div>
          </div>
