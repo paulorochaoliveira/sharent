@@ -67,7 +67,6 @@ const MENUITEMS = [
     name: 'User Panel',
     type: 'sub',
     children: [
-      {state: 'dashboard', name: 'Dashboard', type: 'link'},
       {state: 'messages', name: 'Messages', type: 'link'},
       {state: 'bookings', name: 'Bookings', type: 'link'},
       {state: 'reviews', name: 'Reviews', type: 'link'},

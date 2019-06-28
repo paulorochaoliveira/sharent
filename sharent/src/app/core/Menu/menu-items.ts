@@ -41,11 +41,10 @@ const MENUITEMS = [
     name: 'Profil',
     type: 'sub',
     children: [
-      {state: 'dashboard', name: 'Tableau de bord', type: 'link'},
       {state: 'messages', name: 'Messages', type: 'link'},
       {state: 'bookings', name: 'Réservations', type: 'link'},
       {state: 'reviews', name: 'Évaluations', type: 'link'},
-      {state: 'list', name: 'Objets', type: 'link'},
+      {state: 'list', name: 'Mes objets', type: 'link'},
       {state: 'profile', name: 'Modifier profil', type: 'link'}
     ]
   },

@@ -33,13 +33,17 @@ export class AdminHeaderComponent implements OnInit, OnDestroy {
      //    }
      // });
      this.userIsAuthenticated = this.authService.getIsAuth();
+     this.userName = this.authService.getUserFullName();
      this.authListenerSubs = this.authService
      .getAuthStatusListener()
      .subscribe(isAuthenticated => {
        this.userIsAuthenticated = isAuthenticated;
      });
   }
-
+  
+   getUserName() {
+      return this.userName;
+   }
   onLogout() {
      this.authService.logout();
    }
