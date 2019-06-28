@@ -53,12 +53,12 @@
                   <div class="col-lg-4 col-md-6 grid-layout-list" *ngFor="let product of products">
                      <div  class="listing-item-container compact">
                         <div class="listing-item mb-4">
-                           <a [routerLink]="['/listing/detail/version2']"> <img src="{{product.imagePath}}" alt=""></a>
+                           <a [routerLink]="['/listing/detail/version2', product.id]"> <img src="{{product.imagePath}}" alt=""></a>
                            <span class="badge badge-pill badge-primary text-uppercase">Now Open</span>
                            <div class="listing-item-content">
                               <span class="badge badge-pill badge-primary text-uppercase"> Eletronique</span>
                               <DirectlistRating [rate]="5"></DirectlistRating>
-                              <a [routerLink]="['/listing/detail/version2']">
+                              <a [routerLink]="['/listing/detail/version2', product.id]">
                                  <h3>{{product.product_name}}</h3>
                               </a>
                               <span> <small>Cambuci 272 Cordeiro</small> </span>
