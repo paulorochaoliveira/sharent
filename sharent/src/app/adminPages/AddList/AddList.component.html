@@ -7,13 +7,13 @@
                <div class="add-listing-section mb-4">
                   <!-- Headline -->
                   <div class="add-listing-headline">
-                     <h3> Basic Informations</h3>
+                     <h3> Informations sur l'objet</h3>
                   </div>
                   <!-- Title -->
                   <div class="row with-forms">
                      <div class="col-md-12">
                         <div class="form-group">
-                           <input type="text" formControlName="product_name" placeholder="Product Name" class="form-control form-control-alternative">
+                           <input type="text" formControlName="product_name" placeholder="Nom du produit" class="form-control form-control-alternative">
                         </div>
                      </div>
                   </div>
@@ -22,39 +22,28 @@
                      <!-- Status -->
                      <div class="col-md-6">
                         <select class="custom-select form-control-alternative mb-3" aria-placeholder="Category" >
-                           <option label="blank">Select Category</option>
-                           <option>Eat & Drink</option>
-                           <option>Shops</option>
-                           <option>Hotels</option>
-                           <option>Restaurants</option>
-                           <option>Fitness</option>
-                           <option>Events</option>
+                           <option label="Catégorie">Select Category</option>
+                           <option>Rénovation</option>
+                           <option>Jardin</option>
+                           <option>Sport</option>
+                           <option>Décoration</option>
+                           <option>Art</option>
                         </select>
                      </div>
                   </div>
                   <!-- Row / End -->
-               </div>
+               <!--</div>-->
                <!-- Section / End -->
                
                <!-- Section -->
-               <div class="add-listing-section mb-4">
-                  <div>
-                     <button class="btn btn-darker" type="button" (click)="filePicker.click()">Pick Image</button>
-                     <input type="file" #filePicker (change)="onImagePicked($event)">
-                  </div>
-                     <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && form.get('image').valid">
-                     <img [src]="imagePreview" [alt]="form.value.title">
-                  </div>
-                  <!-- Dropzone -->
-                  <!-- <dropzone class="dropzone-container" formControlName="image" [message]="'Click or drag images here to upload'"></dropzone> -->
-               </div>
+               
                <!-- Section / End -->
                <!-- Section -->
-               <div class="add-listing-section mb-4">
-                  <!-- Headline -->
+               <!--<div class="add-listing-section mb-4">-->
+                  <!-- Headline 
                   <div class="add-listing-headline">
-                     <h3> Details</h3>
-                  </div>
+                     <h3> Détails</h3>
+                  </div>-->
                   <div class="form">
                      <textarea class="form-control form-control-alternative" formControlName="description" placeholder="Description" id="exampleFormControlTextarea1" rows="3"></textarea>
                   </div>
@@ -101,12 +90,12 @@
                <!-- Section / End -->
                <!-- Section -->
                <div class="add-listing-section switcher-on mb-4">
-                  <!-- Headline -->
+                  <!-- Headline 
                   <div class="add-listing-headline mb-0">
-                     <h3> Pricing</h3>
-                     <!-- Switcher -->
-                     <!-- <label class="switch"><input type="checkbox" checked><span class="slider round"></span></label> -->
-                  </div>
+                     <h3> Prix</h3>
+                     Switcher
+                     <label class="switch"><input type="checkbox" checked><span class="slider round"></span></label>
+                  </div>-->
                   <!-- Switcher ON-OFF Content -->
                   <div class="switcher-content">
                      <div class="row">
@@ -116,13 +105,24 @@
                                  <td>
                                     <!-- <div class="fm-input pricing-name"><input type="text" placeholder="Title" class="form-control form-control-alternative" /></div>
                                     <div class="fm-input pricing-ingredients"><input type="text" placeholder="Description" class="form-control form-control-alternative" /></div> -->
-                                    <div class="fm-input pricing-price"><input type="text" formControlName="price" placeholder="Price" class="form-control form-control-alternative" /></div>
+                                   <div class="fm-input pricing-price"><input type="text" formControlName="price" placeholder="Prix" class="form-control form-control-alternative" /></div>
                                  </td>
                               </tr>
                            </table>
+                            <div class="add-listing-section mb-4">
+                  <div>
+                     <button class="btn btn-darker" type="button" (click)="filePicker.click()">Télécharger une image</button>
+                     <input type="file" #filePicker (change)="onImagePicked($event)">
+                  </div>
+                     <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && form.get('image').valid">
+                     <img [src]="imagePreview" [alt]="form.value.title">
+                  </div>
+                  <!-- Dropzone -->
+                  <!-- <dropzone class="dropzone-container" formControlName="image" [message]="'Click or drag images here to upload'"></dropzone> -->
+               </div>
                            <div class="mt-3">  
                               <!-- <a href="#" class="btn btn-primary">Add Item</a> -->
-                              <button class="btn btn-primary" type="submit">Add Product</button>
+                              <button class="btn btn-primary" type="submit">Ajouter objet</button>
                            </div>
                         </div>
                      </div>
@@ -130,7 +130,7 @@
                   <!-- Switcher ON-OFF Content / End -->
                </div>
                <!-- Section / End -->
-               <a href="#" class="btn btn-danger">Preview <i class="fa fa-arrow-circle-right"></i></a>
+               <!-- <a href="#" class="btn btn-danger">Preview <i class="fa fa-arrow-circle-right"></i></a>-->
             </div>
          </div>
          <!-- Copyrights -->
