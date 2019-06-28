@@ -51,6 +51,6 @@ export const ListingRoutes: Routes = [{
   component: ListingDetailOneComponent
 },
 {
-  path: 'detail/version2',
+  path: 'detail/version2/:id',
   component: ListingDetailTwoComponent
 }];

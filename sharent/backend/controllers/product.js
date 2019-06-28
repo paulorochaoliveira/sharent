@@ -118,17 +118,17 @@ exports.getProducts = (req, res, next) => {
 };
 
 exports.getProduct = (req, res, next) => {
-  Post.findById(req.params.id)
-    .then(post => {
-      if (post) {
-        res.status(200).json(post);
+  Product.findByPk(req.params.id)
+    .then(product => {
+      if (product) {
+        res.status(200).json(product);
       } else {
-        res.status(404).json({ message: "Post not found!" });
+        res.status(404).json({ message: "Product not found!" });
       }
     })
     .catch(error => {
       res.status(500).json({
-        message: "Fetching post failed!"
+        message: "Fetching product failed!"
       });
     });
 };
