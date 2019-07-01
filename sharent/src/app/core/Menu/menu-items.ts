@@ -16,25 +16,7 @@ const MENUITEMS = [
   {
     state: 'listing',
     name: 'Rechercher',
-    type: 'sub',
-    children: [
-      {
-         state: 'grid', 
-         name: 'Grid Layout', 
-         type: 'sub',
-         children: [
-            {state: 'full-width', name: 'Full Width', type: 'link'}
-          ]
-      },
-      {
-         state: 'detail', 
-         name: 'Detail', 
-         type: 'sub',
-         children: [
-            {state: 'version1', name: 'Version1', type: 'link'}
-          ]
-      },
-    ]
+    type: 'link',
   },
   {
     state: 'admin',
