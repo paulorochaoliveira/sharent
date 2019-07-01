@@ -5,12 +5,8 @@ import { DropzoneModule } from 'ngx-dropzone-wrapper';
 import { DROPZONE_CONFIG } from 'ngx-dropzone-wrapper';
 import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
-import { AdminDashboardlComponent } from './Dashboard/AdminDashboard.component';
 import { MessagesComponent } from './Messages/Messages.component';
-import { BookingsComponent } from './Bookings/Bookings.component';
 import { ReviewsComponent } from './Reviews/Reviews.component';
-import { BookmarksComponent } from './Bookmarks/Bookmarks.component';
 import { ListComponent } from './List/List.component';
 import { AddListComponent } from './AddList/AddList.component';
 import { ProfileComponent } from './Profile/Profile.component';
@@ -34,11 +30,8 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     RouterModule.forChild(AdminRoutes),
   ],
   declarations: [ 
-    AdminDashboardlComponent,
     MessagesComponent,
-    BookingsComponent,
     ReviewsComponent,
-    BookmarksComponent,
     ListComponent,
     AddListComponent,
     ProfileComponent

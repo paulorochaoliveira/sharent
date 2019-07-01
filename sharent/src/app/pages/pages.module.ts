@@ -6,14 +6,8 @@ import { DROPZONE_CONFIG } from 'ngx-dropzone-wrapper';
 import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 
 import { UserProfileComponent } from './UserProfile/UserProfile.component';
-import { BookingComponent } from './Booking/Booking.component';
-import { BlogListingComponent } from './Blog/BlogListing/BlogListing.component';
-import { BlogDetailComponent } from './Blog/BlogDetail/BlogDetail.component';
 import { AddListingComponent } from './AddListing/AddListing.component';
 
-import { PricingComponent } from './Pricing/Pricing.component';
-import { InvoiceComponent } from './Invoice/Invoice.component';
-import { ContactComponent } from './Contact/Contact.component';
 import { AboutComponent } from './About/About.component';
 
 import { GlobalModule } from '../globalFrontendComponents/global.module';
@@ -36,14 +30,8 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     RouterModule.forChild(PagesRoutes),
   ],
   declarations: [ 
-   PricingComponent,
-   InvoiceComponent,
-   ContactComponent,
    AboutComponent,
     UserProfileComponent,
-    BookingComponent,
-    BlogListingComponent,
-    BlogDetailComponent,
     AddListingComponent
   ],
   providers: [

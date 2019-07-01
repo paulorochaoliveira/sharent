@@ -16,6 +16,11 @@ export const AppRoutes: Routes = [
   pathMatch: 'full',
 }, 
 {
+  path: 'about',
+  redirectTo: 'pages/about-us',
+  pathMatch: 'full',
+}, 
+{
   path: '',
   component: FrontendPanelLayoutComponent,
   children: [{
