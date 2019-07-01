@@ -24,7 +24,6 @@ const MENUITEMS = [
     type: 'sub',
     children: [
       {state: 'messages', name: 'Messages', type: 'link'},
-      {state: 'bookings', name: 'Réservations', type: 'link'},
       {state: 'reviews', name: 'Évaluations', type: 'link'},
       {state: 'list', name: 'Mes objets', type: 'link'},
       {state: 'profile', name: 'Modifier profil', type: 'link'}
