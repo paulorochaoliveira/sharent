@@ -2,6 +2,8 @@ import { Component, OnInit, AfterViewInit, ViewEncapsulation, OnDestroy } from '
 import { AdminMenuItems } from './admin-menu-items';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/session/auth.service';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-header',
@@ -15,6 +17,7 @@ export class AdminHeaderComponent implements OnInit, OnDestroy {
   url: string;
 
   isFixedClass : boolean = false; 
+  private userName: string;
 
   userIsAuthenticated = false;
   private authListenerSubs: Subscription;
@@ -44,6 +47,7 @@ export class AdminHeaderComponent implements OnInit, OnDestroy {
    getUserName() {
       return this.userName;
    }
+   
   onLogout() {
      this.authService.logout();
    }
