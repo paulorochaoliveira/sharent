@@ -4,11 +4,18 @@ import { AdminPanelLayoutComponent } from './layouts/adminPanel/AdminPanelLayout
 import { FrontendPanelLayoutComponent } from './layouts/frontendPanel/FrontendPanel.component';
 import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
 
-export const AppRoutes: Routes = [{
+export const AppRoutes: Routes = [
+{
   path: '',
   redirectTo: 'home',
   pathMatch: 'full',
-}, {
+}, 
+{
+  path: 'listing',
+  redirectTo: 'listing/grid/full-width',
+  pathMatch: 'full',
+}, 
+{
   path: '',
   component: FrontendPanelLayoutComponent,
   children: [{
