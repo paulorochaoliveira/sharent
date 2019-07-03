@@ -9,6 +9,8 @@ import { NouisliderModule } from 'ng2-nouislider';
 import { GridFullWidthComponent } from './GridFullWidth/GridFullWidth.component';
 import { ListingDetailTwoComponent } from './ListingDetailTwo/ListingDetailTwo.component';
 
+import { ListFullWidthComponent } from './ListFullWidth/ListFullWidth.component';
+
 import { GallerySliderComponent } from '../globalFrontendComponents/GallerySlider/GallerySlider.component';
 import { SmallGallerySliderComponent } from '../globalFrontendComponents/SmallGallerySlider/SmallGallerySlider.component';
 
@@ -37,6 +39,7 @@ import { AngularMaterialModule } from '../angular-material.module';
      GallerySliderComponent,
      SmallGallerySliderComponent,
      SidebarLayoutTwoComponent,
+     ListFullWidthComponent
    ]
 })
 

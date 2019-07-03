@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { GridFullWidthComponent } from './GridFullWidth/GridFullWidth.component';
+import { ListFullWidthComponent } from './ListFullWidth/ListFullWidth.component';
 import { ListingDetailTwoComponent } from './ListingDetailTwo/ListingDetailTwo.component';
 
 export const ListingRoutes: Routes = [
@@ -10,4 +11,8 @@ export const ListingRoutes: Routes = [
 {
   path: 'detail/version2/:id',
   component: ListingDetailTwoComponent
+},
+{
+  path: 'list/full-width',
+  component: ListFullWidthComponent
 }];
