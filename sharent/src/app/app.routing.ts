@@ -12,7 +12,7 @@ export const AppRoutes: Routes = [
 }, 
 {
   path: 'listing',
-  redirectTo: 'listing/list/full-width',
+  redirectTo: 'listing/grid/full-width',
   pathMatch: 'full',
 }, 
 {
