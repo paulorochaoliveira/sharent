@@ -56,12 +56,12 @@
                            <a [routerLink]="['/listing/detail/version2', product.id]"> <img src="{{product.imagePath}}" alt=""></a>
                            <span class="badge badge-pill badge-primary text-uppercase">Now Open</span>
                            <div class="listing-item-content">
-                              <span class="badge badge-pill badge-primary text-uppercase"> Eletronique</span>
+                              <span class="badge badge-pill badge-primary text-uppercase"> {{product.categorie}}</span>
                               <DirectlistRating [rate]="5"></DirectlistRating>
                               <a [routerLink]="['/listing/detail/version2', product.id]">
                                  <h3>{{product.product_name}}</h3>
                               </a>
-                              <span> <small>Cambuci 272 Cordeiro</small> </span>
+                              
                            </div>
                            <span class="round-pill like-banner d-block bg-primary"><i class="fa fa-heart-o"></i></span>
                         </div>
