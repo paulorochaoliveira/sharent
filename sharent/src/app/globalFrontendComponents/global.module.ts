@@ -5,21 +5,13 @@ import { RouterModule } from '@angular/router';
 import { BarRatingModule } from "ngx-bar-rating";
 import { SlickModule } from 'ngx-slick';
 
-import { MapBannerComponent } from '../globalFrontendComponents/MapBanner/MapBanner.component';
-import { TitleBarComponent } from '../globalFrontendComponents/TitleBar/TitleBar.component';
-import { PaginationComponent } from '../globalFrontendComponents/Pagination/Pagination.component';
-import { RatingComponent } from '../globalFrontendComponents/Rating/Rating.component';
-import { TeamComponent } from './Team/Team.component';
-import { BannerComponent } from './Banner/Banner.component';
-import { PopularCategoriesComponent } from './PopuplarCategories/PopularCategories.component';
-import { MostVisitedPlacesComponent } from './MostVisitedPlaces/MostVisitedPlaces.component';
-import { RecentBlogComponent } from './RecentBlog/RecentBlog.component';
-import { FeatureSectionComponent } from './FeatureSection/FeatureSection.component';
-import { TestimonialComponent } from './Testimonial/Testimonial.component';
-import { FeatureGridSectionComponent } from '../globalFrontendComponents/FeatureGridSection/FeatureGridSection.component';
-import { PricingComponent } from './Pricing/Pricing.component';
-import { ParallaxComponent } from './ParallaxSection/Parallax.component';
-import { ServicesComponent } from './Services/Services.component';
+import { MapBannerComponent } from '../globalFrontendComponents/MapBanner/MapBanner.component'; 
+import { TitleBarComponent } from '../globalFrontendComponents/TitleBar/TitleBar.component'; 
+import { PaginationComponent } from '../globalFrontendComponents/Pagination/Pagination.component'; 
+import { RatingComponent } from '../globalFrontendComponents/Rating/Rating.component'; 
+import { BannerComponent } from './Banner/Banner.component'; 
+import { PopularCategoriesComponent } from './PopuplarCategories/PopularCategories.component'; 
+import { ParallaxComponent } from './ParallaxSection/Parallax.component'; 
 
 @NgModule({
    imports : [
@@ -33,34 +25,18 @@ import { ServicesComponent } from './Services/Services.component';
     TitleBarComponent,
     PaginationComponent,
     RatingComponent,
-    TeamComponent,
     BannerComponent ,
      PopularCategoriesComponent,
-     MostVisitedPlacesComponent,
-     RecentBlogComponent,
-     FeatureSectionComponent,
-     TestimonialComponent,
-     FeatureGridSectionComponent,
-     PricingComponent,
-     ParallaxComponent,
-     ServicesComponent
+     ParallaxComponent
   ],
   exports: [ 
      MapBannerComponent,
      TitleBarComponent,
      PaginationComponent,
      RatingComponent,
-     TeamComponent,
      BannerComponent ,
      PopularCategoriesComponent,
-     MostVisitedPlacesComponent,
-     RecentBlogComponent,
-     FeatureSectionComponent,
-     TestimonialComponent,
-     FeatureGridSectionComponent,
-     PricingComponent,
-     ParallaxComponent,
-     ServicesComponent
+     ParallaxComponent
    ]
 })
 
