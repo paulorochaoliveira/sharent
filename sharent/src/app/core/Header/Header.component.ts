@@ -25,16 +25,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(private authService: AuthService) {}
 
    ngOnInit(){
-      // this._router = this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
-      //    this.url = event.url;
-      //    if (this.isFixedHeader()) {
-      //       this.isFixedClass = true;
-      //    }
-      //    else
-      //    {
-      //       this.isFixedClass = false;
-      //    }
-      // });
       this.userName = this.authService.getUserFullName();
       this.userIsAuthenticated = this.authService.getIsAuth();
       console.log(this.userIsAuthenticated);
