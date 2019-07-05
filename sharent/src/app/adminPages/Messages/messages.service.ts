@@ -47,7 +47,6 @@ export class MessagesService {
           maxMessages: transformedMessageData.maxMessages
         });
       });
-      console.log('yo');
   }
 
   getMessageUpdateListener() {
@@ -83,27 +82,5 @@ export class MessagesService {
         console.log(responseData);
         this.router.navigate(['/']);
       });
-  }
-
-  updateMessage(id: string, recipientId: string, title: string, content: string, isRead: string) {
-    let messageData: Message | FormData;
-      messageData = {
-        id: id,
-        userId: null,
-        recipientId: null,
-        title: title,
-        content: content,
-        isRead: isRead,
-        created_at: null
-    }
-    this.http
-      .put(BACKEND_URL + id, messageData)
-      .subscribe(response => {
-        this.router.navigate(['/']);
-      });
-  }
-
-  deleteMessage(postId: string) {
-    return this.http.delete(BACKEND_URL + postId);
   }
 }

@@ -20,7 +20,6 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     acceptedFiles: 'image/*'
   };
 
-
 @NgModule({
   imports: [
     CommonModule,

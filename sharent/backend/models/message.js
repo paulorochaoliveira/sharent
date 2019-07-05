@@ -15,7 +15,7 @@ module.exports = db.sequelize.define(
     recipientId: {
       type: Sequelize.INTEGER
     },
-    titre: {
+    title: {
       type: Sequelize.STRING
     },
     content: {
