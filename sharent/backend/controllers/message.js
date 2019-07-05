@@ -6,6 +6,7 @@ exports.createMessage = (req, res, next) => {
 
   const messageData = {
     userId: req.userData.userId,
+    recipientId: req.body.recipientId,
     content: req.body.content,
     title: req.body.title,
     isRead: req.body.isRead,

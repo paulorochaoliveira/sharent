@@ -74,7 +74,7 @@ export class MessagesService {
     messageData.append('isRead', isRead);
 
     this.http
-      .post<{ meSSage: string; message: Message }>(
+      .post<{ message: Message }>(
         BACKEND_URL,
         messageData
       )
