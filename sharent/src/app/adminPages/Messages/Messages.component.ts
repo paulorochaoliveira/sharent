@@ -38,6 +38,7 @@ export class MessagesComponent implements OnInit{
       this.isLoading = true;
       this.messagesService.getMessages(this.messagesPerPage, this.currentPage);
       this.userId = this.authService.getUserId();
+      this.userName = this.authService.getUserFullName();
       this.messagesSub = this.messagesService
       .getMessageUpdateListener()
       .subscribe((messageData: { messages: Message[]; maxMessages: number }) => {
@@ -55,9 +56,31 @@ export class MessagesComponent implements OnInit{
       });
    }
 
+    getUserName() {
+      return this.userName;
+   }
+   
+   getUserId() {
+      return this.userId;
+   }
+   
    ngAfterViewInit()
    {
 
    }
+   
+   onSaveMessage() {
+      this.isLoading = true;
+      var d = new Date();
+      this.messagesService.addMessage(
+          13,
+          12,
+          d,
+          document.getElementById("content").value,
+          0
+        );
+
+      }
+    }
 
 }
