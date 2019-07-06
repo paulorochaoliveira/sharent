@@ -12,7 +12,8 @@ import { Message } from './message.model';
   styleUrls: ['./Messages.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class MessagesComponent implements OnInit{
+
+export class MessagesComponent implements OnInit {
    
    messages: Message[] = [];
    isLoading = false;
@@ -38,7 +39,7 @@ export class MessagesComponent implements OnInit{
       this.isLoading = true;
       this.messagesService.getMessages(this.messagesPerPage, this.currentPage);
       this.userId = this.authService.getUserId();
-      this.userName = this.authService.getUserFullName();
+      // this.userName = this.authService.getUserFullName();
       this.messagesSub = this.messagesService
       .getMessageUpdateListener()
       .subscribe((messageData: { messages: Message[]; maxMessages: number }) => {
@@ -57,7 +58,7 @@ export class MessagesComponent implements OnInit{
    }
 
     getUserName() {
-      return this.userName;
+      // return this.userName;
    }
    
    getUserId() {
@@ -68,19 +69,16 @@ export class MessagesComponent implements OnInit{
    {
 
    }
-   
    onSaveMessage() {
       this.isLoading = true;
-      var d = new Date();
+      const d = new Date();
       this.messagesService.addMessage(
-          13,
-          12,
-          d,
-          document.getElementById("content").value,
-          0
+          '13',
+          '12',
+          d.toDateString(),
+          'document.getElementById("content").value',
+          '0'
         );
 
-      }
     }
-
 }
