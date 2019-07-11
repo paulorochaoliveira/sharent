@@ -50,6 +50,7 @@
     "rxjs": "^6.4.0",
     "rxjs-compat": "^6.4.0",
     "sequelize": "^5.8.12",
+    "sequelize-cli": "^5.5.0",
     "slick": "^1.12.2",
     "tooltip": "^1.6.1",
     "waypoints": "^4.0.1",
