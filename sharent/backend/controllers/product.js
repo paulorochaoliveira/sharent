@@ -1,16 +1,16 @@
-const Product = require("../models/product");
+const Product = require("../models").Product;
+const User = require("../models").User;
 
 exports.createProduct = (req, res, next) => {
   const url = req.protocol + "://" + req.get("host");
-  const today = new Date();
+  console.log(req.body.UserId);
 
   const productData = {
-    userId: req.userData.userId,
+    UserId: req.body.UserId,
     product_name: req.body.product_name,
     description: req.body.description,
     price: req.body.price,
-    imagePath: url + "/images/" + req.file.filename,
-    created_at: today
+    imagePath: url + "/images/" + req.file.filename
   };
   Product
     .create(productData)
@@ -35,16 +35,19 @@ exports.updateProduct = (req, res, next) => {
     const url = req.protocol + "://" + req.get("host");
     imagePath = url + "/images/" + req.file.filename;
   }
-  const post = new Post({
-    _id: req.body.id,
-    title: req.body.title,
-    content: req.body.content,
-    imagePath: imagePath,
-    creator: req.userData.userId
-  });
-  Post.updateOne({ _id: req.params.id, creator: req.userData.userId }, post)
+  const productData = {
+    product_name: req.body.product_name,
+    description: req.body.description,
+    price: req.body.price,
+    imagePath: imagePath
+  };
+  Product.update(productData, {
+    where : {
+      id: req.body.id
+    }})
     .then(result => {
-      if (result.n > 0) {
+      console.log(result[0]);
+      if (result[0] > 0) {
         res.status(200).json({ message: "Update successful!" });
       } else {
         res.status(401).json({ message: "Not authorized!" });
@@ -100,6 +103,48 @@ exports.getProducts = (req, res, next) => {
         // attributes: ['id', 'first_name', 'last_name', 'date_of_birth'],
         limit: limit,
         offset: offset,
+        $sort: { id: 1 },
+        include: [{
+            model: User
+          }]
+        }
+      )
+      .then((fetchedProducts) => {
+        res.status(200).json({
+          message: "Posts fetched successfully!",
+          products: fetchedProducts, 
+          maxProducts: count
+        });
+      });
+  })
+  .catch(function (error) {
+		res.status(500).json({
+      message: "Fetching posts failed!"
+    });
+	});
+};
+
+exports.getProductsUser = (req, res, next) => {
+  let limit = +req.query.pagesize;   // number of records per page
+  let offset = 0;
+  let count = 0;
+  Product.findAndCountAll({
+    where: {
+      UserId: req.query.UserId
+    }})
+    .then((data) => {
+      let page = +req.query.page;      // page number
+      
+      count = data.count;
+      console.log(count);
+      // let pages = Math.ceil(data.count / limit);
+		  offset = limit * (page - 1);
+      Product.findAll({
+        where: {
+          UserId: req.query.UserId
+        },
+        limit: limit,
+        offset: offset,
         $sort: { id: 1 }
       })
       .then((fetchedProducts) => {
@@ -117,10 +162,21 @@ exports.getProducts = (req, res, next) => {
 	});
 };
 
+
+
 exports.getProduct = (req, res, next) => {
-  Product.findByPk(req.params.id)
+  Product.findAll({
+    where: {
+      id: req.params.id
+    },
+    include: [{
+      model: User,
+      attributes: ['id', 'first_name', 'last_name']
+    }]
+  })
     .then(product => {
       if (product) {
+        // console.log(product.user);
         res.status(200).json(product);
       } else {
         res.status(404).json({ message: "Product not found!" });
@@ -134,10 +190,14 @@ exports.getProduct = (req, res, next) => {
 };
 
 exports.deleteProduct = (req, res, next) => {
-  Post.deleteOne({ _id: req.params.id, creator: req.userData.userId })
+  console.log(req.params.id);
+  Product.destroy({
+    where : {
+      id: req.params.id
+    }})
     .then(result => {
       console.log(result);
-      if (result.n > 0) {
+      if (result > 0) {
         res.status(200).json({ message: "Deletion successful!" });
       } else {
         res.status(401).json({ message: "Not authorized!" });

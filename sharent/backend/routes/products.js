@@ -13,6 +13,8 @@ router.put("/:id", checkAuth, extractFile, ProductController.updateProduct);
 
 router.get("", ProductController.getProducts);
 
+router.get("/userProducts", ProductController.getProductsUser);
+
 router.get("/:id", ProductController.getProduct);
 
 router.delete("/:id", checkAuth, ProductController.deleteProduct);

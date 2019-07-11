@@ -1,11 +1,11 @@
-const Message = require("../models/message");
+const Message = require("../oldModels/message");
 
 exports.createMessage = (req, res, next) => {
   const url = req.protocol + "://" + req.get("host");
   const today = new Date();
 
   const messageData = {
-    userId: req.userData.userId,
+    UserId: req.userData.UserId,
     recipientId: req.body.recipientId,
     content: req.body.content,
     title: req.body.title,
