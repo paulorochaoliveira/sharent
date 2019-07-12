@@ -3,6 +3,7 @@ import { Routes } from '@angular/router';
 import { AdminPanelLayoutComponent } from './layouts/adminPanel/AdminPanelLayout.component';
 import { FrontendPanelLayoutComponent } from './layouts/frontendPanel/FrontendPanel.component';
 import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
+import { AuthGuard } from './session/auth.guard';
 
 export const AppRoutes: Routes = [
 {
@@ -39,6 +40,7 @@ export const AppRoutes: Routes = [
 {
   path: 'admin',
   component: AdminPanelLayoutComponent,
+  canActivate: [AuthGuard],
   children: [{
     path: '',
     loadChildren: './adminPages/admin.module#AdminModule'

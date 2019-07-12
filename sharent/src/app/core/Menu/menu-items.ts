@@ -7,7 +7,29 @@ export interface Menu {
   children?: Menu[];
 }
 
-const MENUITEMS = [
+const MENUITEMSNONAUTH = [
+  {
+    state: 'home',
+    name: 'Accueil',
+    type: 'link'
+  },
+  {
+    state: 'listing',
+    name: 'Rechercher',
+    type: 'link',
+  },
+   {
+      state: 'session',
+      name: 'Session',
+      type: 'sub',
+      children: [
+         {state: 'login', name: 'Connexion', type: 'link'},
+         {state: 'signup', name: 'Nouveau compte', type: 'link'}
+      ]
+   }
+];
+
+const MENUITEMSAUTH = [
   {
     state: 'home',
     name: 'Accueil',
@@ -28,22 +50,17 @@ const MENUITEMS = [
       {state: 'list', name: 'Mes objets', type: 'link'},
       {state: 'profile', name: 'Modifier profil', type: 'link'}
     ]
-  },
-   {
-      state: 'session',
-      name: 'Session',
-      type: 'sub',
-      children: [
-         {state: 'login', name: 'Connexion', type: 'link'},
-         {state: 'signup', name: 'Nouveau compte', type: 'link'}
-      ]
-   }
+  }
 ];
 
 
 @Injectable()
 export class MenuItems {
-  getAll() {
-    return MENUITEMS;
+  getAllNonAuth() {
+    return MENUITEMSNONAUTH;
+  }
+
+  getAllAuth() {
+    return MENUITEMSAUTH;
   }
 }

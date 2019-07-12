@@ -12,6 +12,7 @@ import { AddListComponent } from './AddList/AddList.component';
 import { ProfileComponent } from './Profile/Profile.component';
 
 import { AdminRoutes } from './admin.routing';
+import { AngularMaterialModule } from '../angular-material.module';
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
    // Change this to your upload POST address:
@@ -27,6 +28,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forChild(AdminRoutes),
+    AngularMaterialModule
   ],
   declarations: [ 
     MessagesComponent,

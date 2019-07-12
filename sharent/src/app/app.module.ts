@@ -26,6 +26,7 @@ import { MenuItems } from './core/Menu/menu-items';
 import { AdminMenuItems } from './core/AdminHeader/admin-menu-items';
 import { AuthInterceptor } from './session/auth-interceptor';
 import { AngularMaterialModule } from './angular-material.module';
+import { AuthGuard } from './session/auth.guard';
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
    // Change this to your upload POST address:
@@ -63,7 +64,8 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
       MenuItems, 
       AdminMenuItems,
       { provide: DROPZONE_CONFIG, useValue: DEFAULT_DROPZONE_CONFIG },
-      { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+      { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+      AuthGuard
   ],
   bootstrap: [AppComponent]
 })
