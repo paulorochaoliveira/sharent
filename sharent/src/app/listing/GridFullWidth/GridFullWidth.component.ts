@@ -12,7 +12,7 @@ import { Product } from '../product.model';
   styleUrls: ['./GridFullWidth.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class GridFullWidthComponent implements OnInit{
+export class GridFullWidthComponent implements OnInit {
    
    products: Product[] = [];
    isLoading = false;

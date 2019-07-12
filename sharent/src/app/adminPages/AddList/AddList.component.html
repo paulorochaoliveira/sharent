@@ -1,28 +1,29 @@
-<form [formGroup]="form" (submit)="onSavePost()">
+<form [formGroup]="form" (submit)="onSavePost()" ngNativeValidate>
    <div class="dashboard-content">
       <div class="row">
          <div class="col-lg-12">
             <div id="add-listing">
+
                <!-- Section -->
-               <div class="add-listing-section mb-4">
+               <div class="add-listing-section mb-4 p-4">
                   <!-- Headline -->
                   <div class="add-listing-headline">
                      <h3> Informations sur l'objet</h3>
                   </div>
                   <!-- Title -->
-                  <div class="row with-forms">
+                  <div class="row">
                      <div class="col-md-12">
                         <div class="form-group">
-                           <input type="text" formControlName="product_name" placeholder="Nom du produit" class="form-control form-control-alternative">
+                           <input type="text" formControlName="product_name" placeholder="Nom du produit" class="form-control form-control-alternative" required>
                         </div>
                      </div>
                   </div>
                   <!-- Row -->
-                  <div class="row with-forms">
+                  <div class="row">
                      <!-- Status -->
                      <div class="col-md-6">
                         <select class="custom-select form-control-alternative mb-3" aria-placeholder="Category" >
-                           <option label="Catégorie">Select Category</option>
+                           <option class="text-muted" label="Catégorie">Catégorie</option>
                            <option>Rénovation</option>
                            <option>Jardin</option>
                            <option>Sport</option>
@@ -32,109 +33,70 @@
                      </div>
                   </div>
                   <!-- Row / End -->
-               <!--</div>-->
-               <!-- Section / End -->
-               
-               <!-- Section -->
-               
-               <!-- Section / End -->
-               <!-- Section -->
-               <!--<div class="add-listing-section mb-4">-->
-                  <!-- Headline 
-                  <div class="add-listing-headline">
-                     <h3> Détails</h3>
-                  </div>-->
-                  <div class="form">
-                     <textarea class="form-control form-control-alternative" formControlName="description" placeholder="Description" id="exampleFormControlTextarea1" rows="3"></textarea>
-                  </div>
-                  <!-- Row -->
-                  <!-- <div class="row with-forms"> -->
-                     <!-- Phone -->
-                     <!-- <div class="col-md-4">
-                        <input type="text" placeholder="Phone" class="form-control form-control-alternative" >
-                     </div> -->
-                     <!-- Website -->
-                     <!-- <div class="col-md-4">
-                        <input type="text" placeholder="Website" class="form-control form-control-alternative" >
-                     </div> -->
-                     <!-- Email Address -->
-                     <!-- <div class="col-md-4">
-                        <input type="text" placeholder="E-mail" class="form-control form-control-alternative" >
-                     </div>
-                  </div> -->
-                  <!-- Row / End -->
-                  <!-- Row -->
-                  <!-- <div class="row with-forms"> -->
-                     <!-- Phone -->
-                     <!-- <div class="col-md-4">
-                        <h5 class="fb-input"><i class="fa fa-facebook-square"></i> Facebook <span>(optional)</span></h5>
-                        <input type="text" class="form-control form-control-alternative" placeholder="https://www.facebook.com/">
-                     </div> -->
-                     <!-- Website -->
-                     <!-- <div class="col-md-4">
-                        <h5 class="twitter-input"><i class="fa fa-twitter"></i> Twitter <span>(optional)</span></h5>
-                        <input type="text" class="form-control form-control-alternative" placeholder="https://www.twitter.com/">
-                     </div> -->
-                     <!-- Email Address -->
-                     <!-- <div class="col-md-4">
-                        <h5 class="gplus-input"><i class="fa fa-google-plus"></i> Google Plus <span>(optional)</span></h5>
-                        <input type="text" class="form-control form-control-alternative" placeholder="https://plus.google.com">
-                     </div> -->
-                  <!-- </div> -->
-                  <!-- Row / End -->
-                  <!-- Checkboxes -->
-                  <!-- <h5 class="margin-top-30 margin-bottom-10">Amenities <span>(optional)</span></h5>
-
-                  Checkboxes / End -->
                </div>
                <!-- Section / End -->
+               
+               <!-- Section --> 
+               <div class="add-listing-section mb-4 p-4">
+                  <!-- Headline  -->
+                  <div class="add-listing-headline">
+                     <h3> Détails</h3>
+                  </div>
+
+                  <div class="row">
+                     <div class="col-md-12">                       
+                        <textarea class="form-control form-control-alternative" formControlName="description" placeholder="Description"  rows="3" required></textarea>                        
+                     </div>
+                  </div>               
+               </div>
+               <!-- Section / End -->
+
                <!-- Section -->
-               <div class="add-listing-section switcher-on mb-4">
-                  <!-- Headline 
+               <div class="add-listing-section switcher-on mb-4 p-4">
+                  <!-- Headline  -->
                   <div class="add-listing-headline mb-0">
                      <h3> Prix</h3>
-                     Switcher
-                     <label class="switch"><input type="checkbox" checked><span class="slider round"></span></label>
-                  </div>-->
+                  </div>
                   <!-- Switcher ON-OFF Content -->
                   <div class="switcher-content">
                      <div class="row">
-                        <div class="col-md-12">
-                           <table id="pricing-list-container">
+                        <div class="col-md-6">
+                           <!-- <table id="pricing-list-container">
                               <tr class="pricing-list-item pattern">
                                  <td>
-                                    <!-- <div class="fm-input pricing-name"><input type="text" placeholder="Title" class="form-control form-control-alternative" /></div>
-                                    <div class="fm-input pricing-ingredients"><input type="text" placeholder="Description" class="form-control form-control-alternative" /></div> -->
-                                   <div class="fm-input pricing-price"><input type="text" formControlName="price" placeholder="Prix" class="form-control form-control-alternative" /></div>
+                                    
                                  </td>
                               </tr>
-                           </table>
-                            <div class="add-listing-section mb-4">
-                  <div>
-                     <button class="btn btn-darker" type="button" (click)="filePicker.click()">Télécharger une image</button>
-                     <input type="file" #filePicker (change)="onImagePicked($event)">
-                  </div>
-                     <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && form.get('image').valid">
-                     <img [src]="imagePreview" [alt]="form.value.title">
-                  </div>
-                  <!-- Dropzone -->
-                  <!-- <dropzone class="dropzone-container" formControlName="image" [message]="'Click or drag images here to upload'"></dropzone> -->
-               </div>
-                           <div class="mt-3">  
-                              <!-- <a href="#" class="btn btn-primary">Add Item</a> -->
-                              <button class="btn btn-primary" type="submit">Ajouter objet</button>
+                           </table> -->
+
+                           <div class="fm-input pricing-price mb-5">
+                                 <input type="number" formControlName="price" placeholder="Prix" class="form-control form-control-alternative" required>
                            </div>
+
+                           <div>
+                              <button class="btn btn-darker" type="button" (click)="filePicker.click()">Télécharger une image</button>
+                              <input type="file" #filePicker (change)="onImagePicked($event)">
+                           </div>
+                           <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && form.get('image').valid">
+                              <img [src]="imagePreview" [alt]="form.value.title">
+                           </div>
+                          
                         </div>
                      </div>
                   </div>
                   <!-- Switcher ON-OFF Content / End -->
                </div>
                <!-- Section / End -->
+              
                <!-- <a href="#" class="btn btn-danger">Preview <i class="fa fa-arrow-circle-right"></i></a>-->
+               
+               <!-- Submit button -->
+               <button class="btn btn-primary" type="submit">Ajouter objet</button>
             </div>
          </div>
+
          <!-- Copyrights -->
-         <div class="col-md-12">
+         <div class="col-lg-12">
             <div class="copyrights">© 2019 ShaRent. Tous droits réservés.</div>
          </div>
       </div>

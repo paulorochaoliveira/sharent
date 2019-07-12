@@ -27,8 +27,8 @@ export class AddListComponent implements OnInit, AfterViewInit, OnDestroy {
    form: FormGroup;
    imagePreview: string;
    private mode = 'create';
-   private postId: string;
-   private userId: string;
+   private productId: string;
+   private UserId: string;
    private authStatusSub: Subscription;
  
    constructor(
@@ -39,11 +39,12 @@ export class AddListComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
    ngOnInit() {
+      this.UserId = this.authService.getUserId();
       this.authStatusSub = this.authService
       .getAuthStatusListener()
       .subscribe(authStatus => {
         this.isLoading = false;
-        this.userId = this.authService.getUserId();
+        this.UserId = this.authService.getUserId();
       });
     this.form = new FormGroup({
       'product_name': new FormControl(null, {
@@ -54,20 +55,23 @@ export class AddListComponent implements OnInit, AfterViewInit, OnDestroy {
       'image': new FormControl(null, {asyncValidators: [mimeType]})
     });
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
-      if (paramMap.has('postId')) {
+      if (paramMap.has('prodId')) {
         this.mode = 'edit';
-        this.postId = paramMap.get('postId');
+        this.productId = paramMap.get('prodId');
+        console.log(this.productId);
         this.isLoading = true;
-        this.productsService.getProduct(this.postId).subscribe(productData => {
+        this.productsService.getProduct(this.productId).subscribe(productData => {
           this.isLoading = false;
+          this.imagePreview = productData.imagePath;
           this.product = {
             id: productData.id,
-            userId: productData.userId,
+            UserId: productData.UserId,
             product_name: productData.product_name,
             description: productData.description,
             price: productData.price,
             imagePath: productData.imagePath,
-            created_at: productData.created_at
+            createdAt: productData.createdAt,
+            updatedAt: productData.updatedAt
           };
           this.form.setValue({
             product_name: this.product.product_name,
@@ -78,7 +82,7 @@ export class AddListComponent implements OnInit, AfterViewInit, OnDestroy {
         });
       } else {
         this.mode = 'create';
-        this.postId = null;
+        this.productId = null;
       }
     });
    }
@@ -91,7 +95,7 @@ export class AddListComponent implements OnInit, AfterViewInit, OnDestroy {
       console.log(this.form.value);
       if (this.mode === 'create') {
         this.productsService.addProduct(
-          this.userId,
+          this.UserId,
           this.form.value.product_name,
           this.form.value.description,
           this.form.value.price,
@@ -99,7 +103,7 @@ export class AddListComponent implements OnInit, AfterViewInit, OnDestroy {
         );
       } else {
         this.productsService.updateProduct(
-          this.postId,
+          this.productId,
           this.form.value.product_name,
           this.form.value.description,
           this.form.value.price,

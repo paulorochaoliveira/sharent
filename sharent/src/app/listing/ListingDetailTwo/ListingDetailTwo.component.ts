@@ -16,6 +16,9 @@ import { Product } from '../product.model';
 export class ListingDetailTwoComponent implements OnInit {
    isLoading = false;
    product: Product;
+   userId: string;
+   user: any;
+   userName: string;
 
    private productId: string;
    private authStatusSub: Subscription;
@@ -53,21 +56,25 @@ export class ListingDetailTwoComponent implements OnInit {
            this.productId = paramMap.get('id');
            this.isLoading = true;
            this.productsService.getProduct(this.productId).subscribe(productData => {
+               console.log(productData);
              this.isLoading = false;
+             this.userId = productData[0].User.id;
+             this.userName = productData[0].User.first_name + ' ' + productData[0].User.last_name;
              this.product = {
-               id: productData.id,
-               userId: productData.userId,
-               product_name: productData.product_name,
-               description: productData.description,
-               price: productData.price,
-               imagePath: productData.imagePath,
-               created_at: productData.created_at
+               id: productData[0].id,
+               UserId: productData[0].UserId,
+               product_name: productData[0].product_name,
+               description: productData[0].description,
+               price: productData[0].price,
+               imagePath: productData[0].imagePath,
+               createdAt: productData[0].createdAt,
+               updatedAt: productData[0].updatedAt
              };
+             console.log(this.user);
+            //  this.userName = productData.User.first_name + ' ' + productData.User.last_name;
+
            });
          }
       });
    }
-
-
-
 }

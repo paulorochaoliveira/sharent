@@ -15,7 +15,7 @@
                <div class="nav-wrapper">
                   <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
                      <li class="nav-item">
-                        <a class="nav-link mb-sm-3 mb-md-0 active show" id="tabs-icons-text-1-tab" data-toggle="tab" href="#tabs-icons-text-1" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true"><i class="fa fa-info-circle mr-2"></i>Propriétaire</a>
+                        <a class="nav-link mb-sm-3 mb-md-0 active show" id="tabs-icons-text-1-tab" data-toggle="tab" href="#tabs-icons-text-1" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true"><i class="fa fa-info-circle mr-2"></i>Détails</a>
                      </li>
                      <li class="nav-item">
                         <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-2-tab" data-toggle="tab" href="#tabs-icons-text-2" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false"><i class="fa fa-map-marker mr-2"></i>Localisation</a>
@@ -35,29 +35,28 @@
                         <div class="tab-pane fade active show" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
                            
                            <div class="row mb-4">
-                              <div class="col-lg-4">
+                              <div class="col-lg-8">
                                  <div class="detail-list mb-2">
-                                    <div class="detail-list-label mb-1"><i aria-hidden="true" class="fa fa-phone mr-2"></i>
-                                       <small class="text-uppercase font-weight-bold">Nom du propriétaire</small>
+                                    <div class="detail-list-label mb-1"><i aria-hidden="true" class="fa fa-info mr-2"></i>
+                                       <small class="text-uppercase font-weight-bold">Description</small>
                                     </div>
-                                    <p class="m-0 text-small text-muted">Something</p>
+                                    <p class="m-0 text-small text-muted">{{ product.description }}</p>
                                  </div>
                               </div>
                               <div class="col-lg-4">
                                  <div class="detail-list mb-2">
-                                    <div class="detail-list-label mb-1"><i aria-hidden="true" class="fa fa-phone mr-2"></i>
-                                       <small class="text-uppercase font-weight-bold">Adresse</small>
+                                    <div class="detail-list-label mb-1">
+                                       <img src="{{ product.imagePath }}" alt="{{ product.product_name }}" class="img-thumbnail rounded float-right">
                                     </div>
-                                    <p class="m-0 text-small text-muted">Something</p>
                                  </div>
-                              </div>
-                              <div class="col-lg-4">
+                              </div> 
+                              <!-- <div class="col-lg-4">
                                  <div class="detail-list mb-2">
                                     <div class="detail-list-label mb-1"><i aria-hidden="true" class="fa fa-phone mr-2"></i><small class="text-uppercase font-weight-bold">Courriel</small>
                                     </div>
                                     <p class="m-0 text-small text-muted">Something</p>   
                                  </div>
-                              </div>
+                              </div>  -->
                            </div>
                           
                         </div>
@@ -128,7 +127,7 @@
             </div>
          </div>
          <div class="col-lg-4">
-            <sidebar-layout-two></sidebar-layout-two>
+            <sidebar-layout-two [userIdChild]='userId'[userNameChild]='userName'></sidebar-layout-two>
          </div>
       </div>
    </div>

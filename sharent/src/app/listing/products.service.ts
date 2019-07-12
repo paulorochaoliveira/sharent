@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 
 import { environment } from '../../environments/environment';
 import { Product } from './product.model';
+import { AuthService } from '../session/auth.service';
 
 const BACKEND_URL = environment.apiUrl + '/product/';
 
@@ -14,7 +15,7 @@ export class ProductsService {
   private products: Product[] = [];
   private productsUpdated = new Subject<{ products: Product[]; maxProducts: number }>();
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, public authService: AuthService) {}
 
   getProducts(productsPerPage: number, currentPage: number) {
     const queryParams = `?pagesize=${productsPerPage}&page=${currentPage}`;
@@ -33,7 +34,43 @@ export class ProductsService {
                 id: product.id,
                 price: product.price,
                 imagePath: product.imagePath,
-                userId: product.userId
+                UserId: product.UserId,
+                user: product.User
+              };
+            }),
+            maxProducts: productData.maxProducts
+          };
+        })
+      )
+      .subscribe(transformedProductData => {
+        this.products = transformedProductData.products;
+        this.productsUpdated.next({
+          products: [...this.products],
+          maxProducts: transformedProductData.maxProducts
+        });
+      });
+  }
+
+  getProductsUser(productsPerPage: number, currentPage: number) {
+    
+    const UserId = this.authService.getUserId();
+    const queryParams = `?UserId=${UserId}&pagesize=${productsPerPage}&page=${currentPage}`;
+    this.http
+      .get<{ message: string; products: any; maxProducts: number }>(
+        BACKEND_URL + 'userProducts/' + queryParams
+      )
+      .pipe(
+        map(productData => {
+          return {
+            message: productData.message,
+            products: productData.products.map(product => {
+              return {
+                product_name: product.product_name,
+                description: product.description,
+                id: product.id,
+                price: product.price,
+                imagePath: product.imagePath,
+                UserId: product.UserId
               };
             }),
             maxProducts: productData.maxProducts
@@ -56,18 +93,20 @@ export class ProductsService {
   getProduct(id: string) {
     return this.http.get<{
       id: string;
-      userId: string;
+      UserId: string;
       product_name: string;
       description: string;
       price: string;
       imagePath: string;
-      created_at: string;
+      createdAt: string;
+      updatedAt: string;
+      User: any;
     }>(BACKEND_URL + id);
   }
 
-  addProduct(userId: string, product_name: string, description: string, price: string, image: File) {
+  addProduct(UserId: string, product_name: string, description: string, price: string, image: File) {
     const productData = new FormData();
-    productData.append('userId', userId);
+    productData.append('UserId', UserId);
     productData.append('product_name', product_name);
     productData.append('description', description);
     productData.append('price', price);
@@ -80,7 +119,7 @@ export class ProductsService {
       )
       .subscribe(responseData => {
         console.log(responseData);
-        this.router.navigate(['/']);
+        this.router.navigate(['/admin/list']);
       });
   }
 
@@ -96,22 +135,24 @@ export class ProductsService {
     } else {
       productData = {
         id: id,
-        userId: null,
+        UserId: null,
         product_name: product_name,
         description: description,
         price: price,
         imagePath: image,
-        created_at: null
+        createdAt: null,
+        updatedAt: null
       };
     }
     this.http
       .put(BACKEND_URL + id, productData)
       .subscribe(response => {
-        this.router.navigate(['/']);
+        this.router.navigate(['/admin/list']);
       });
   }
 
-  deleteProduct(postId: string) {
-    return this.http.delete(BACKEND_URL + postId);
+  deleteProduct(productId: string) {
+    console.log(productId);
+    return this.http.delete(BACKEND_URL + productId);
   }
 }
