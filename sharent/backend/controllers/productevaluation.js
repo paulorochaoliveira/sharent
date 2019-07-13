@@ -3,7 +3,6 @@ const Product = require("../models").Product;
 const User = require("../models").User;
 
 exports.createProductEvaluation = (req, res, next) => {
-  const url = req.protocol + "://" + req.get("host");
   console.log(req.body.UserId);
 
   const productEvaluationData = {
@@ -17,7 +16,7 @@ exports.createProductEvaluation = (req, res, next) => {
     .then(createdProduct => {
       res.status(201).json({
         message: "Product Evaluation added successfully",
-        product: createdProduct
+        productEvaluation: createdProduct
       });
     })
     .catch(error => {

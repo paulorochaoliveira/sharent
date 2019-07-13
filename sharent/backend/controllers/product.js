@@ -1,5 +1,6 @@
 const Product = require("../models").Product;
 const User = require("../models").User;
+const ProductEvaluation = require("../models").ProductEvaluation;
 
 exports.createProduct = (req, res, next) => {
   const url = req.protocol + "://" + req.get("host");
@@ -165,18 +166,23 @@ exports.getProductsUser = (req, res, next) => {
 
 
 exports.getProduct = (req, res, next) => {
-  Product.findAll({
+  Product.findOne({
     where: {
       id: req.params.id
     },
     include: [{
       model: User,
       attributes: ['id', 'first_name', 'last_name']
+    }, {
+      model: ProductEvaluation,
+      include: [{
+        model: User,
+        attributes: ['id', 'first_name', 'last_name'],
+      }]
     }]
   })
     .then(product => {
       if (product) {
-        // console.log(product.user);
         res.status(200).json(product);
       } else {
         res.status(404).json({ message: "Product not found!" });
