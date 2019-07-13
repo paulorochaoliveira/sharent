@@ -62,45 +62,96 @@
                         </div>
                         <div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
                            <p class="description">Voici l'adresse du propriétaire de l'objet</p>
-                           <div>
-                              
-                               
-                               <!-- MAP -->
-                            <div class="mapouter">
-                                <div class="gmap_canvas">
-                                    <iframe width="600" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=1440%20rue%20stanley&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
-                                    </iframe>
-                                </div>
-                                <style>.mapouter{position:relative;text-align:right;height:500px;width:600px;}.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:600px;}
-                                </style>
-                            </div>
-                               <!-- FIN MAP -->
-                
+                           
+                           <!-- MAP -->
+                           <div class="mapouter">
+                              <div id="map-container-google-1" class="z-depth-1-half map-container">
+                                 <iframe  height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=1440%20rue%20stanley&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
+                                 </iframe>
+                              </div>
+                              <!-- <style>.mapouter{position:relative;text-align:right;height:500px;width:600px;}.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:600px;}
+                              </style> -->
                            </div>
+                           <!-- FIN MAP -->
+
                         </div>
                         <div class="tab-pane fade" id="tabs-icons-text-3" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">
                            <div class="pricing-list-container">
                               <ul>
                                  <li>
                                     <h5>{{ product.product_name }}</h5>
-                                    <span>{{ product.price }}</span>
+                                    <span>{{ product.price }} $/jour</span>
                                  </li>
                                  
                               </ul>
                            </div>
                         </div>
                         <div class="tab-pane fade" id="tabs-icons-text-4" role="tabpanel" aria-labelledby="tabs-icons-text-4-tab">
-                           <div class="row mb-4 list-img-wrap">
+                           <div class="row mb-4">
+                              <div class="col-md-12">
+                                 <button *ngIf="!isEvaluating" class="btn btn-light float-right" (click)="onEvaluating()">Évaluer Ce Produit</button>
+                              </div>
+                           </div>
+                           <div *ngIf="isEvaluating" class="row mb-5 pt-2 border-bottom">
+                              <div class="col-md-12">
+                                    <span class="btn float-right" (click)="stopEvaluation()"><i class="fa fa-times-circle"></i></span>
+                                 <h4 class="text-muted">Évaluation générale</h4>
+                                 <form (submit)="onEvaluated(evaluationForm)" #evaluationForm="ngForm" ngNativeValidate>
+                                    <div class="form-group mb-1">
+                                       <div class="input-group">
+                                          <fieldset class="rating" name="rating" ngModel #ratingInput="ngModel" required>
+                                                <input type="radio" name="rating" value="5" [checked]="rating===5" />
+                                                <label title="Rocks!" (click)='onClick(5)'>5 stars</label>
+                                                
+                                                <input type="radio" name="rating"  value="4" [checked]="rating===4" />
+                                                <label title="Pretty good" (click)='onClick(4)'>4 stars</label>
+                                                
+                                                <input type="radio" name="rating"  value="3" [checked]="rating===3" />
+                                                <label title="Meh" (click)='onClick(3)'>3 stars</label>
+                                                
+                                                <input type="radio" name="rating"  value="2" [checked]="rating===2" />
+                                                <label title="Kinda bad" (click)='onClick(2)'>2 stars</label>
+                                                
+                                                <input type="radio" name="rating"  value="1" [checked]="rating===1" />
+                                                <label title="Sucks big time" (click)='onClick(1)'>1 star</label>
+                                          </fieldset>
+                                       </div>
+                                    </div>
+                                       
+                                    <div class="form-group mb-3">
+                                       <div class="input-group input-group-alternative">
+                                          <div class="input-group-prepend">
+                                             <span class="input-group-text"><i class="fa fa-comment"></i></span>
+                                          </div>
+                                          <textarea class="form-control" name="evaluation" ngModel placeholder="Décrivez votre experience..." #evaluationInput="ngModel" rows="3" required></textarea>
+                                       </div>
+                                    </div>
+
+                                    <div class="row mb-4">
+                                          <div class="col-md-12">
+                                             <button class="btn btn-primary float-right" (click)="onEvaluated()">Envoyer</button>
+                                          </div>
+                                       </div>
+                                 </form>
+                              </div>
+                           </div>
+                           <div class="row">
+                              <div class="col-md-12">
+                                    <h4 class="text-center" *ngIf="ProductEvaluations.length == 0">Aucune Évaluation</h4>
+                              </div>
+                           </div>
+                           <div class="row mb-5 list-img-wrap" *ngFor="let productEvaluation of ProductEvaluations">
                               <div class="col-md-2 list-img"><img class="img-fluid rounded-circle shadow-lg" src="assets/images/thumb-1.jpg">
                               </div>
                               <div class="col-md-10">
-                                 <h5 class="text-primary">Charlotte Ainsley</h5>
-                                 <p class="text-muted">15 Minutes Ago</p>
-                                 <p>Lorem Ipsum is simply dummy text of the pr make but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                                 <button class="btn btn-sm btn-primary" type="button">Helpful?</button>
+                                 <h5 class="text-primary">{{ productEvaluation.User.first_name + ' ' + productEvaluation.User.last_name}}</h5>
+                                 <p class="text-muted">{{ productEvaluation.createdAt | date }}</p>
+                                 <DirectlistRating rate="{{ productEvaluation.rate }}"></DirectlistRating>
+                                 <p class="mt-2">{{ productEvaluation.evaluation }}</p>
+                                 <!-- <button class="btn btn-sm btn-primary" type="button">Helpful?</button> -->
                               </div>
                            </div>
-                           <div class="row mb-4 list-img-wrap">
+                           <!-- <div class="row mb-4 list-img-wrap">
                               <div class="col-md-2 list-img"><img class="img-fluid rounded-circle shadow-lg" src="assets/images/thumb-2.jpg">
                               </div>
                               <div class="col-md-10">
@@ -119,7 +170,7 @@
                                  <p>Lorem Ipsum is simply dummy text of the pr make but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
                                  <button class="btn btn-sm btn-primary" type="button">Helpful?</button>
                               </div>
-                           </div>
+                           </div> -->
                         </div>
                      </div>
                   </div>

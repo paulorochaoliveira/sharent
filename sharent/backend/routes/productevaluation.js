@@ -7,16 +7,16 @@ const checkAuth = require("../middleware/check-auth");
 
 const router = express.Router();
 
-router.post("", checkAuth, ProductEvaluationController.createProduct);
+router.post("", checkAuth, ProductEvaluationController.createProductEvaluation);
 
-router.put("/:id", checkAuth, ProductEvaluationController.updateProduct);
+// router.put("/:id", checkAuth, ProductEvaluationController.updateProduct);
 
-router.get("", ProductEvaluationController.getProducts);
+// router.get("", ProductEvaluationController.getProducts);
 
-router.get("/userProducts", ProductEvaluationController.getProductsUser);
+// router.get("/userProducts", ProductEvaluationController.getProductsUser);
 
-router.get("/:id", ProductEvaluationController.getProduct);
+// router.get("/:id", ProductEvaluationController.getProduct);
 
-router.delete("/:id", checkAuth, ProductEvaluationController.deleteProduct);
+// router.delete("/:id", checkAuth, ProductEvaluationController.deleteProduct);
 
 module.exports = router;

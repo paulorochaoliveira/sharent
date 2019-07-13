@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { Product } from './product.model';
 import { AuthService } from '../session/auth.service';
+import { ProductEvaluation } from './productEvaluation.model';
 
 const BACKEND_URL = environment.apiUrl + '/product/';
 
@@ -101,6 +102,7 @@ export class ProductsService {
       createdAt: string;
       updatedAt: string;
       User: any;
+      ProductEvaluations: any;
     }>(BACKEND_URL + id);
   }
 
@@ -154,5 +156,33 @@ export class ProductsService {
   deleteProduct(productId: string) {
     console.log(productId);
     return this.http.delete(BACKEND_URL + productId);
+  }
+
+  addProductEvaluation(rate: string, evaluation: string, ProductId: string, UserId: string) {
+    const productEvaluationData: ProductEvaluation = {
+      id: null,
+      rate: rate,
+      evaluation: evaluation,
+      ProductId: ProductId,
+      UserId: UserId,
+      createdAt: null,
+      updatedAt: null
+    };
+
+    // const productEvaluationData = new FormData();
+    // productEvaluationData.append('rate', rate);
+    // productEvaluationData.append('evaluation', evaluation);
+    // productEvaluationData.append('ProductId', ProductId);
+    // productEvaluationData.append('UserId', UserId);
+
+    console.log(productEvaluationData);
+    return this.http.post<{ message: string; productEvaluation: any }>(
+      environment.apiUrl + '/productEvaluation/',
+      productEvaluationData
+    )
+    .subscribe(responseData => {
+      console.log(responseData);
+      this.router.navigate(['/listing/detail/version2/' + ProductId]);
+    });
   }
 }
