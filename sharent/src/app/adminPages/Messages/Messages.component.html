@@ -10,19 +10,21 @@
                <div class="messages-inbox">
                   <ul>
                       <!-- Ici, je dois trouvé une façon d'afficher seulement le nom et l'id des gens qui ont déja écrit au membre -->
-                      <div *ngFor="let message of messages">
-                          <li>
-                              
-                              <!-- En cliquant sur un des elements suivant,  je veux que la liste des messages affichés soit uniquement celle qui correspond -->
-                              
-                            <a onclick="">
-                               <div class="message-by">
-                                  <div class="message-by-headline">
-                                     <h5>{{message.userId}}</h5>
-                                  </div>
-                               </div>
-                            </a>
-                         </li>
+                      <div >
+                           <li *ngFor="let userData of usersData; let i = index" 
+                              [class.active-message]="selectedIndex === i" 
+                              (click)="setIndex(i)">
+                              <a [routerLink]="" (click)="onUserSelected(userData)">
+                                 <div class="message-avatar"><img src="{{ userData.imagePath }}" alt="" /></div>
+                                 <div class="message-by">
+                                    <div class="message-by-headline">
+                                       <h5>{{ userData.first_name + ' ' + userData.last_name }}</h5>
+                                       <span>2 hours ago</span>
+                                    </div>
+                                    <p>Hello, I want to talk about your great listing! Morbi velit eros, sagittis in facilisis non, rhoncus et erat. Nam posuere tristique sem, eu ultricies tortor lacinia neque imperdiet vitae...</p>
+                                 </div>
+                              </a>
+                           </li>
                       </div>
                   </ul>
                </div>
@@ -32,25 +34,23 @@
                <!-- Message Content -->
                <div class="message-content" >
                   <div *ngFor="let message of messages">
-                      <div> 
-                          
-                          
-                           <div class="message-bubble">
-                                 <div class="message-avatar"><img src="assets/images/thumb-1.jpg" alt="" /></div>
-                                 <div class="message-text">
-                                    <p>{{message.content}}</p>
-                                    <p>{{ message.recipientId }}</p>
-                                     <p>{{ getUserId() }}</p>
-                                 </div>
-                           </div>
-                      </div>
+                     <div class="message-bubble {{ message.UserId == userId ? 'me' : '' }}">
+                        <div class="message-avatar">
+                           <img src="{{ message.UserId == userId ? userAuth.imagePath : userSelected.imagePath }}" alt="" />
+                        </div>
+                        <div class="message-text">
+                           <p>{{ message.content }}</p>
+                           <!-- <p>{{ message.recipientId }}</p>
+                              <p>{{ getUserId() }}</p> -->
+                        </div>
+                     </div>
                  </div>
                   
                   <!-- Reply Area -->
                   <div class="clearfix"></div>
                   <div class="message-reply">
-                        <form (submit)="onSaveMessage()">
-                             <textarea id="content" cols="40" rows="3" placeholder="Votre message" class="form-control form-control-alternative mb-4"></textarea>
+                        <form (submit)="onSaveMessage(messageForm)" #messageForm="ngForm" ngNativeValidate>
+                             <textarea ngModel #evaluationInput="ngModel" name="content" id="content" cols="40" rows="3" placeholder="Votre message" class="form-control form-control-alternative mb-4"></textarea>
                              <button class="btn btn-primary" type="submit">Envoyez message</button>
                         </form>
                   </div>
