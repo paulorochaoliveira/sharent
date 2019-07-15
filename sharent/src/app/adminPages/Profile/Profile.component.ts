@@ -17,8 +17,4 @@ export class ProfileComponent implements OnInit{
 
       
    }
-   
-   getUserName() {
-      return this.userName;
-   }
 }
