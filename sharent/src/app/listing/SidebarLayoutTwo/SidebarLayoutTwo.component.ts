@@ -10,10 +10,11 @@ export class SidebarLayoutTwoComponent implements OnInit {
 
   @Input() userIdChild: string;
   @Input() userNameChild: string;
+  @Input() userImagePathChild: string;
 
-   constructor(){}
+   constructor() {}
 
-   ngOnInit(){}
+   ngOnInit() {}
 
    ngAfterViewInit()
    {

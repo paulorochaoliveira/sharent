@@ -23,6 +23,7 @@ export class ListingDetailTwoComponent implements OnInit {
    userId: string;
    user: any;
    userName: string;
+   userImagePath: string;
    ProductEvaluations: [];
 
    private productId: string;
@@ -67,6 +68,7 @@ export class ListingDetailTwoComponent implements OnInit {
                this.userId = productData.User.id;
                this.userName = productData.User.first_name + ' ' + productData.User.last_name;
                this.ProductEvaluations = productData.ProductEvaluations;
+               this.userImagePath = productData.imagePath;
                this.product = {
                   id: productData.id,
                   UserId: productData.UserId,

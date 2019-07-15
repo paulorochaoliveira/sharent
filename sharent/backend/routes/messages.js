@@ -11,6 +11,8 @@ router.post("", checkAuth, extractFile, MessageController.createMessage);
 
 router.get("", MessageController.getMessages);
 
+router.get("/users", MessageController.getUsers);
+
 router.get("/:id", MessageController.getMessage);
 
 module.exports = router;

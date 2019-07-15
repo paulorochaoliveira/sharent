@@ -8,7 +8,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      creator:{
+      receiver:{
         allowNull: false,
         type: Sequelize.INTEGER
       },
@@ -18,7 +18,7 @@ module.exports = {
       },
       content: {
         allowNull: false,
-        type: Sequelize.STRING(255)
+        type: Sequelize.TEXT
       },
       isRead: {
         type: Sequelize.CHAR,

@@ -18,6 +18,9 @@ export class AuthService {
     private userFirstName: string;
     private userLastName: string;
     private authStatusListener = new Subject<boolean>();
+    private loginFailed = false;
+    private user: {id: string, first_name: string, last_name: string, email: string, imagePath: string};
+    private userEmail: string;
 
     constructor(private http: HttpClient, private router: Router) {}
     
@@ -33,12 +36,20 @@ export class AuthService {
       return this.UserId;
     }
 
-    getUserFullName(){
+    getUserFullName() {
       return this.userFirstName + ' ' + this.userLastName;
     }
   
     getAuthStatusListener() {
       return this.authStatusListener.asObservable();
+    }
+
+    getLoginFailed() {
+      return this.loginFailed;
+    }
+
+    getAuthUser() {
+      return this.user;
     }
 
     createUser(last_name: string, first_name: string, email: string, password: string) {
@@ -57,9 +68,9 @@ export class AuthService {
     }
 
     login(email: string, password: string) {
-        const authData: AuthData = { last_name: null, first_name : null, email: email, password: password };
+        const authData = { last_name: null, first_name : null, email: email, password: password };
         this.http
-          .post<{ token: string; expiresIn: number; UserId: string; userLastName: string; userFirstName: string }>(
+          .post<{ token: string; expiresIn: number; UserId: string; userLastName: string; userFirstName: string, imagePath: string }>(
             BACKEND_URL + '/login',
             authData
           )
@@ -70,18 +81,33 @@ export class AuthService {
               if (token) {
                 const expiresInDuration = response.expiresIn;
                 this.setAuthTimer(expiresInDuration);
+                this.loginFailed = false;
                 this.isAuthenticated = true;
                 this.UserId = response.UserId;
                 this.userLastName = response.userLastName;
                 this.userFirstName = response.userFirstName;
+                this.userEmail = email;
+                
+                this.user = {
+                  id: this.UserId,
+                  first_name: this.userFirstName,
+                  last_name: this.userLastName,
+                  email: email,
+                  imagePath: response.imagePath
+                };
                 this.authStatusListener.next(true);
                 const now = new Date();
                 const expirationDate = new Date(
                   now.getTime() + expiresInDuration * 1000
                 );
                 console.log(expirationDate);
-                this.saveAuthData(token, expirationDate, this.UserId, this.userLastName, this.userFirstName);
+                this.saveAuthData(token, expirationDate, this.UserId, this.userLastName,
+                                  this.userFirstName, this.userEmail, response.imagePath);
                 this.router.navigate(['/']);
+              } else
+              {
+                this.loginFailed = true;
+                this.authStatusListener.next(false);
               }
             },
             error => {
@@ -105,6 +131,14 @@ export class AuthService {
           this.userFirstName = authInformation.userFirstName;
           this.setAuthTimer(expiresIn / 1000);
           this.authStatusListener.next(true);
+          this.user = {
+            id: authInformation.UserId,
+            first_name: authInformation.userFirstName,
+            last_name: authInformation.userLastName,
+            email: authInformation.userEmail,
+            imagePath: authInformation.imagePath
+          };
+          console.log(this.user);
         }
       }
     
@@ -125,12 +159,15 @@ export class AuthService {
         }, duration * 1000);
       }
     
-      private saveAuthData(token: string, expirationDate: Date, UserId: string, userLastName: string, userFirstName: string) {
+      private saveAuthData(token: string, expirationDate: Date, UserId: string,
+                            userLastName: string, userFirstName: string, userEmail: string, imagePath: string) {
         localStorage.setItem('token', token);
         localStorage.setItem('expiration', expirationDate.toISOString());
         localStorage.setItem('UserId', UserId);
         localStorage.setItem('userLastName', userLastName);
         localStorage.setItem('userFirstName', userFirstName);
+        localStorage.setItem('userEmail', userEmail);
+        localStorage.setItem('imagePath', imagePath);
       }
     
       private clearAuthData() {
@@ -139,6 +176,8 @@ export class AuthService {
         localStorage.removeItem('UserId');
         localStorage.removeItem('userLastName');
         localStorage.removeItem('userFirstName');
+        localStorage.removeItem('userEmail');
+        localStorage.removeItem('imagePath');
 
       }
     
@@ -148,6 +187,8 @@ export class AuthService {
         const UserId = localStorage.getItem('UserId');
         const userLastName = localStorage.getItem('userLastName');
         const userFirstName = localStorage.getItem('userFirstName');
+        const userEmail = localStorage.getItem('userEmail');
+        const imagePath = localStorage.getItem('imagePath');
         if (!token || !expirationDate) {
           return;
         }
@@ -156,7 +197,9 @@ export class AuthService {
           expirationDate: new Date(expirationDate),
           UserId: UserId,
           userLastName : userLastName,
-          userFirstName: userFirstName
+          userFirstName: userFirstName,
+          userEmail: userEmail,
+          imagePath: imagePath,
         };
       }
 

@@ -12,45 +12,84 @@ const BACKEND_URL = environment.apiUrl + '/message/';
 @Injectable({ providedIn: 'root' })
 export class MessagesService {
   private messages: Message[] = [];
-  private messagesUpdated = new Subject<{ messages: Message[]; maxMessages: number }>();
+  private usersData: {id: string, first_name: string, last_name: string, imagePath: string}[];
+  private messagesUpdated = new Subject<{ messages: Message[]}>();
+// tslint:disable-next-line: max-line-length
+  private usersUpdated = new Subject<{ usersData: {id: string, first_name: string, last_name: string, email: string, imagePath: string}[]}>();
+  
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  getMessages(messagesPerPage: number, currentPage: number) {
-    const queryParams = `?pagesize=${messagesPerPage}&page=${currentPage}`;
+  getUsers(UserId: string) {
+    const queryParams = `?UserId=${UserId}`;
     this.http
-      .get<{ message: string; messages: any; maxMessages: number }>(
+      .get<{ users: any}>(
+        BACKEND_URL + 'users' + queryParams
+      )
+      .pipe(
+        map(usersData => {
+          // console.log(usersData);
+          return {
+            users: usersData.users
+            .map(user => {
+              return {
+                id : user.User.id,
+                first_name: user.User.first_name,
+                last_name: user.User.last_name,
+                email: user.User.email,
+                imagePath: user.User.imagePath
+              };
+            })
+          };
+        })
+      )
+      .subscribe(transformedUsersData => {
+        this.usersData = transformedUsersData.users;
+        this.usersUpdated.next({
+          usersData: transformedUsersData.users
+        });
+      });
+    }
+
+  getMessages(UserId: string, receiver: string) {
+
+    const queryParams = `?UserId=${UserId}&receiver=${receiver}`;
+    this.http
+      .get<{ messages: any }>(
         BACKEND_URL + queryParams
       )
       .pipe(
         map(messageData => {
           return {
-            message: messageData.message,
             messages: messageData.messages.map(message => {
               return {
                 id: message.id,
-                userId: message.userId,
-                recipientId: message.recipientId,
+                UserId: message.UserId,
+                receiver: message.receiver,
                 title: message.title,
                 content: message.content,
-                isRead: message.isRead
+                isRead: message.isRead,
+                createdAt: message.createdAt,
+                User: message.User
               };
-            }),
-            maxMessages: messageData.maxMessages
+            })
           };
         })
       )
       .subscribe(transformedMessageData => {
         this.messages = transformedMessageData.messages;
         this.messagesUpdated.next({
-          messages: [...this.messages],
-          maxMessages: transformedMessageData.maxMessages
+          messages: [...this.messages]
         });
       });
   }
 
   getMessageUpdateListener() {
     return this.messagesUpdated.asObservable();
+  }
+
+  getUsersUpdateListener() {
+    return this.usersUpdated.asObservable();
   }
 
   getMessage(id: string) {
@@ -65,13 +104,12 @@ export class MessagesService {
     }>(BACKEND_URL + id);
   }
 
-  addMessage(userId: string, recipientId: string, title: string, content: string, isRead: string) {
+  addMessage(userId: string, receiver: string, title: string, content: string) {
     const messageData = new FormData();
     messageData.append('userId', userId);
-    messageData.append('recipientId', recipientId);
+    messageData.append('receiver', receiver);
     messageData.append('title', title);
     messageData.append('content', content);
-    messageData.append('isRead', isRead);
 
     this.http
       .post<{ message: Message }>(
@@ -80,7 +118,7 @@ export class MessagesService {
       )
       .subscribe(responseData => {
         console.log(responseData);
-        this.router.navigate(['/']);
+        // this.router.navigate(['/']);
       });
   }
 }

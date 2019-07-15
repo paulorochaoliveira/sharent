@@ -39,6 +39,9 @@
                            </div>
                         </div>
                         <div class="card-body px-lg-5 py-lg-5">
+                           <div *ngIf="loginFailed" class="text-center alert alert-danger  text-muted mb-3">
+                              <h6>Email et/ou mot de passe invalide</h6>
+                           </div>
                            <div class="text-center text-muted mb-4">
                               <h6>Connexion avec votre adresse courriel</h6>
                            </div>

@@ -1,7 +1,7 @@
 export interface Message {
   id: string;
-  userId: string;
-  recipientId: string;
+  UserId: string;
+  receiver: string;
   title: string;
   content: string;
   isRead: string;

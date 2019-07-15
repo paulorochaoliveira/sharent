@@ -1,6 +1,7 @@
 const http = require('http');
 const debug = require('debug')('node-angular');
 const app = require('./backend/app');
+const socketio = require('socket.io');
 
 const normalizePort = val => {
     var port = parseInt(val, 10);
@@ -46,6 +47,57 @@ const port = normalizePort(process.env.PORT || "3000");
 app.set("port", port);
 
 const server = http.createServer(app);
+const io = socketio(server);
+
 server.on("error", onError);
 server.on("listening", onListening);
-server.listen(port);
+
+var connectedUsers = {};
+
+io.on('connection', (socket) => {
+    console.log('New Websocket connection');
+
+    socket.emit('message', 'Welcome!');
+
+    /*Register connected user*/
+    socket.on('register', function(username) {
+        socket.username = username;
+        connectedUsers[username] = socket;
+    });
+
+    /*Private chat*/
+    socket.on('private_chat', function(data){
+        const to = data.to;
+        const from = data.from;
+        const message = data.message;
+
+        if(to in connectedUsers){
+            console.log(true);
+            connectedUsers[to].emit('private_chat',{
+                //The sender's username
+                username : socket.username,
+
+                //Message sent to receiver
+                message : message
+            });
+            connectedUsers[from].emit('private_chat',{
+                //The sender's username
+                username : socket.username,
+
+                //Message sent to receiver
+                message : message
+            });
+        }
+
+    }); 
+
+
+
+    // socket.on('sendMessage', (message) => {
+    //     io.emit('message' , message);
+    // })
+})
+
+server.listen(port, () => {
+    console.log(`Server is up on port ${port}!`);
+});
