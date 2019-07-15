@@ -46,21 +46,21 @@
                   <!-- Sorting - Filtering Section / End -->
                   <div class="row">
                      <!-- Listing Item -->
-                     <div class="col-lg-12 col-md-12" *ngFor="let list of Data">
+                     <div class="col-lg-12 col-md-12" *ngFor="let product of products">
                         <div class="listing-item-container list-layout mb-4">
                            <div  class="listing-item">
                               <!-- Image -->
                               <div class="listing-item-image">
-                                <a [routerLink]="['/listing/detail/version2']"><img src="{{list.image}}" alt=""></a> 
+                                <a [routerLink]="['/listing/detail/version2', product.id]"><img class="w-100 p-0" src="{{ product.imagePath }}" alt=""></a> 
                               </div>
                               <!-- Content -->
                               <div class="listing-item-content">
-                                 <span class="badge badge-pill list-banner badge-success text-uppercase">{{list.badge}}</span>
+                                 <!-- <span class="badge badge-pill list-banner badge-success text-uppercase">{{list.badge}}</span> -->
                                  <div class="listing-item-inner">
-                                       <DirectlistRating [rate]="list.rating" [review]="list.review"></DirectlistRating>
-                                 <a [routerLink]="['/listing/detail/version2']">  <h3>{{list.title}}</h3></a> 
-                                    <span><small>{{list.address}}</small></span>
-                                    <div class="mt-3"><span class="badge badge-pill badge-primary text-uppercase">{{list.category}}</span></div>
+                                       <DirectlistRating rate="5"></DirectlistRating>
+                                 <a [routerLink]="['/listing/detail/version2', product.id]">  <h3>{{ product.product_name }}</h3></a> 
+                                    <span><small>5080 WestHill, Montreal</small></span>
+                                    <div class="mt-3"><span class="badge badge-pill badge-primary text-uppercase">Catégorie</span></div>
                                    
                                  </div>
                                  <span class="round-pill like-banner d-block bg-primary"><i class="fa fa-heart-o"></i></span>
@@ -72,7 +72,7 @@
                   </div>
                   <!-- Pagination -->
                   <div class="clearfix"></div>
-                  <pagination></pagination>
+                  <mat-paginator [length]="totalProducts" [pageSize]="productsPerPage" [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)" *ngIf="products.length > 0"></mat-paginator>
                   <!-- Pagination / End -->
                </div>
             </div>

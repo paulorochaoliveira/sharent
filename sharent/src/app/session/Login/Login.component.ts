@@ -11,6 +11,7 @@ import { NgForm } from '@angular/forms';
 })
 export class LoginComponent implements OnInit{
 
+  loginFailed = false;
   isLoading = false;
   private authStatusSub: Subscription;
 
@@ -30,6 +31,11 @@ export class LoginComponent implements OnInit{
     }
     this.isLoading = true;
     this.authService.login(form.value.email, form.value.password);
+    this.authStatusSub = this.authService.getAuthStatusListener().subscribe(
+      authStatus => {
+        this.loginFailed = true;
+      }
+    );
   }
 
   ngOnDestroy() {

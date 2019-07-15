@@ -16,15 +16,16 @@ export class AdminHeaderComponent implements OnInit, OnDestroy {
   private _router: Subscription;
   url: string;
 
-  isFixedClass : boolean = false; 
+  isFixedClass: boolean = false;
   private userName: string;
-
+  user: {id: string, first_name: string, last_name: string, email: string, imagePath: string};
+  
   userIsAuthenticated = false;
   private authListenerSubs: Subscription;
 
  constructor(private authService: AuthService) {}
 
-  ngOnInit(){
+  ngOnInit() {
      // this._router = this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
      //    this.url = event.url;
      //    if (this.isFixedHeader()) {
@@ -37,11 +38,18 @@ export class AdminHeaderComponent implements OnInit, OnDestroy {
      // });
      this.userIsAuthenticated = this.authService.getIsAuth();
      this.userName = this.authService.getUserFullName();
+     this.user = this.authService.getAuthUser();
      this.authListenerSubs = this.authService
      .getAuthStatusListener()
      .subscribe(isAuthenticated => {
        this.userIsAuthenticated = isAuthenticated;
+       this.user = this.authService.getAuthUser();
      });
+     console.log(this.user.imagePath);
+  }
+
+  getUserImagePath() {
+    return this.user.imagePath;
   }
   
    getUserName() {

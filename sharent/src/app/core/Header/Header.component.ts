@@ -16,6 +16,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
    url: string;
 
    private userName: string;
+   user: {id: string, first_name: string, last_name: string, email: string, imagePath: string};
 
    isFixedClass = false;
 
@@ -24,17 +25,23 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   constructor(private authService: AuthService) {}
 
-   ngOnInit(){
+   ngOnInit() {
       this.userName = this.authService.getUserFullName();
       this.userIsAuthenticated = this.authService.getIsAuth();
+      this.user = this.authService.getAuthUser();
       console.log(this.userIsAuthenticated);
+
       this.authListenerSubs = this.authService
       .getAuthStatusListener()
       .subscribe(isAuthenticated => {
         this.userIsAuthenticated = isAuthenticated;
-        console.log(this.userIsAuthenticated);
+
       });
    }
+
+   getUserImagePath() {
+    return this.user.imagePath;
+  }
 
    getUserName() {
       return this.userName;

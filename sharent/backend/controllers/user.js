@@ -43,44 +43,43 @@ exports.createUser = (req, res, next) => {
 
 exports.userLogin = (req, res, next) => {
   let fetchedUser;
+  
   User.findOne({ 
     where: {
       email: req.body.email 
     }
   })
-    .then(user => {
-      if (!user) {
-        return res.status(401).json({
-          message: "Auth failed"
-        });
-      }
-      fetchedUser = user;
-      return bcrypt.compare(req.body.password, user.password);
-    })
-    .then(result => {
-      if (!result) {
-        return res.status(401).json({
-          message: "Auth failed"
-        });
-      }
-      const token = jwt.sign(
-        { email: fetchedUser.email, UserId: fetchedUser.id },
-        process.env.JWT_KEY,
-        { expiresIn: "1h" }
-      );
-      res.status(200).json({
-        token: token,
-        expiresIn: 3600,
-        UserId: fetchedUser.id,
-        userLastName: fetchedUser.last_name,
-        userFirstName: fetchedUser.first_name
-      });
-    })
-    .catch(err => {
-      return res.status(401).json({
-        message: "Invalid authentication credentials!"
-      });
+  .then(user => {
+    if (!user) {
+      throw new Error('Unable to login');
+    }
+    fetchedUser = user;
+    return bcrypt.compare(req.body.password, user.password);
+  })
+  .then(result => {
+    if (!result) {
+      throw new Error('Unable to login');
+    }
+    console.log(result);
+    const token = jwt.sign(
+      { email: fetchedUser.email, UserId: fetchedUser.id },
+      process.env.JWT_KEY,
+      { expiresIn: "1h" }
+    );
+    res.status(200).json({
+      token: token,
+      expiresIn: 3600,
+      UserId: fetchedUser.id,
+      userLastName: fetchedUser.last_name,
+      userFirstName: fetchedUser.first_name,
+      imagePath: fetchedUser.imagePath
     });
+  })
+  .catch (err => {
+    res.status(401).json({
+      message: "Invalid authentication credentials!"
+    });
+  })
 }
 
 exports.getUser = (req, res, next) => {
