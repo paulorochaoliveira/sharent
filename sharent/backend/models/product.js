@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     // Product belongs to one User
     Product.belongsTo(models.User);
     Product.hasMany(models.ProductEvaluation);
+    Product.belongsTo(models.Category);
   };
   return Product;
 };

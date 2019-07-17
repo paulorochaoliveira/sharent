@@ -22,13 +22,9 @@
                   <div class="row">
                      <!-- Status -->
                      <div class="col-md-6">
-                        <select class="custom-select form-control-alternative mb-3" aria-placeholder="Category" >
-                           <option class="text-muted" label="Catégorie">Catégorie</option>
-                           <option>Rénovation</option>
-                           <option>Jardin</option>
-                           <option>Sport</option>
-                           <option>Décoration</option>
-                           <option>Art</option>
+                        <select class="custom-select form-control-alternative mb-3" aria-placeholder="Category" formControlName="CategoryId" required>
+                           <option class="text-muted" label="Category" [value]="null">Catégorie</option>
+                           <option *ngFor="let category of productsService.getCategoriesList()" [value]="category.id">{{ category.name }}</option>
                         </select>
                      </div>
                   </div>

@@ -14,6 +14,7 @@ const BACKEND_URL = environment.apiUrl + '/product/';
 @Injectable({ providedIn: 'root' })
 export class ProductsService {
   private products: Product[] = [];
+  private categories: {id: string, name: string}[] = [];
   private productsUpdated = new Subject<{ products: Product[]; maxProducts: number }>();
 
   constructor(private http: HttpClient, private router: Router, public authService: AuthService) {}
@@ -36,7 +37,8 @@ export class ProductsService {
                 price: product.price,
                 imagePath: product.imagePath,
                 UserId: product.UserId,
-                user: product.User
+                user: product.User,
+                category: product.Category
               };
             }),
             maxProducts: productData.maxProducts
@@ -50,6 +52,33 @@ export class ProductsService {
           maxProducts: transformedProductData.maxProducts
         });
       });
+  }
+
+  getCategories() {
+    this.http
+      .get<{ message: string; categories: any; }>(
+        environment.apiUrl + '/category/'
+      )
+      .pipe(
+        map(categoriesData => {
+          return {
+            message: categoriesData.message,
+            categories: categoriesData.categories.map(category => {
+              return {
+                id: category.id,
+                name: category.name
+              };
+            })
+          };
+        })
+      )
+      .subscribe(transformedCategoriesData => {
+        this.categories = transformedCategoriesData.categories;
+      });
+  }
+
+  getCategoriesList() {
+    return this.categories;
   }
 
   getProductsUser(productsPerPage: number, currentPage: number) {
@@ -103,13 +132,15 @@ export class ProductsService {
       updatedAt: string;
       User: any;
       ProductEvaluations: any;
+      Category: any;
     }>(BACKEND_URL + id);
   }
 
-  addProduct(UserId: string, product_name: string, description: string, price: string, image: File) {
+  addProduct(UserId: string, product_name: string, CategoryId: string, description: string, price: string, image: File) {
     const productData = new FormData();
     productData.append('UserId', UserId);
     productData.append('product_name', product_name);
+    productData.append('CategoryId', CategoryId);
     productData.append('description', description);
     productData.append('price', price);
     productData.append('image', image, product_name);
@@ -125,12 +156,13 @@ export class ProductsService {
       });
   }
 
-  updateProduct(id: string, product_name: string, description: string, price: string, image: File | string) {
+  updateProduct(id: string, product_name: string, CategoryId: string, description: string, price: string, image: File | string) {
     let productData: Product | FormData;
     if (typeof image === 'object') {
       productData = new FormData();
       productData.append('id', id);
       productData.append('product_name', product_name);
+      productData.append('CategoryId', CategoryId);
       productData.append('description', description);
       productData.append('price', price);
       productData.append('image', image, product_name);
@@ -143,7 +175,8 @@ export class ProductsService {
         price: price,
         imagePath: image,
         createdAt: null,
-        updatedAt: null
+        updatedAt: null,
+        category: null
       };
     }
     this.http

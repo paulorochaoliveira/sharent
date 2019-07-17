@@ -44,7 +44,7 @@ export class GridFullWidthComponent implements OnInit {
         this.isLoading = false;
         this.totalProducts = productData.maxProducts;
         this.products = productData.products;
-        console.log(productData);
+        console.log(this.products);
       });
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.authStatusSub = this.authService

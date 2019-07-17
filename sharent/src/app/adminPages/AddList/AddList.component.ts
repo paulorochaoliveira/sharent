@@ -26,6 +26,7 @@ export class AddListComponent implements OnInit, AfterViewInit, OnDestroy {
    isLoading = false;
    form: FormGroup;
    imagePreview: string;
+   categories: {id: string, name: string}[] = [];
    private mode = 'create';
    private productId: string;
    private UserId: string;
@@ -46,10 +47,14 @@ export class AddListComponent implements OnInit, AfterViewInit, OnDestroy {
         this.isLoading = false;
         this.UserId = this.authService.getUserId();
       });
+      this.productsService.getCategories();
+      // this.categories = this.productsService.getCategoriesList();
+      console.log(this.categories);
     this.form = new FormGroup({
       'product_name': new FormControl(null, {
         validators: [Validators.required, Validators.minLength(3)]
       }),
+      'CategoryId': new FormControl(null, {validators: [Validators.required]}),
       'description': new FormControl(null, { validators: [Validators.required] }),
       'price': new FormControl(null, { validators: [Validators.required] }),
       'image': new FormControl(null, {asyncValidators: [mimeType]})
@@ -71,7 +76,8 @@ export class AddListComponent implements OnInit, AfterViewInit, OnDestroy {
             price: productData.price,
             imagePath: productData.imagePath,
             createdAt: productData.createdAt,
-            updatedAt: productData.updatedAt
+            updatedAt: productData.updatedAt,
+            category: null
           };
           this.form.setValue({
             product_name: this.product.product_name,
@@ -97,6 +103,7 @@ export class AddListComponent implements OnInit, AfterViewInit, OnDestroy {
         this.productsService.addProduct(
           this.UserId,
           this.form.value.product_name,
+          this.form.value.CategoryId,
           this.form.value.description,
           this.form.value.price,
           this.form.value.image
@@ -105,6 +112,7 @@ export class AddListComponent implements OnInit, AfterViewInit, OnDestroy {
         this.productsService.updateProduct(
           this.productId,
           this.form.value.product_name,
+          this.form.value.CategoryId,
           this.form.value.description,
           this.form.value.price,
           this.form.value.image

@@ -141,7 +141,7 @@
                               </div>
                            </div>
                            <div class="row mb-5 list-img-wrap" *ngFor="let productEvaluation of ProductEvaluations">
-                              <div class="col-md-2 list-img"><img class="img-fluid rounded-circle shadow-lg" src="assets/images/thumb-1.jpg">
+                              <div class="col-md-2 list-img"><img class="img-fluid rounded-circle shadow-lg" src="{{ productEvaluation.User.imagePath }}">
                               </div>
                               <div class="col-md-10">
                                  <h5 class="text-primary">{{ productEvaluation.User.first_name + ' ' + productEvaluation.User.last_name}}</h5>
