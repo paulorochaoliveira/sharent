@@ -68,7 +68,7 @@ export class ListingDetailTwoComponent implements OnInit {
                this.userId = productData.User.id;
                this.userName = productData.User.first_name + ' ' + productData.User.last_name;
                this.ProductEvaluations = productData.ProductEvaluations;
-               this.userImagePath = productData.imagePath;
+               this.userImagePath = productData.User.imagePath;
                this.product = {
                   id: productData.id,
                   UserId: productData.UserId,
@@ -77,7 +77,8 @@ export class ListingDetailTwoComponent implements OnInit {
                   price: productData.price,
                   imagePath: productData.imagePath,
                   createdAt: productData.createdAt,
-                  updatedAt: productData.updatedAt
+                  updatedAt: productData.updatedAt,
+                  category: productData.Category
                };
              console.log(this.product);
             //  this.userName = productData.User.first_name + ' ' + productData.User.last_name;

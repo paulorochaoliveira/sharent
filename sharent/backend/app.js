@@ -6,6 +6,7 @@ const productRoutes = require("./routes/products");
 const userRoutes = require("./routes/users");
 const messageRoutes = require("./routes/messages");
 const productEvaluationRoutes = require("./routes/productevaluation");
+const categoryRoutes = require("./routes/categoryRoutes");
 
 const app = express();
 
@@ -30,5 +31,6 @@ app.use("/api/product", productRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/message", messageRoutes);
 app.use("/api/productEvaluation", productEvaluationRoutes);
+app.use("/api/category", categoryRoutes);
 
 module.exports = app;

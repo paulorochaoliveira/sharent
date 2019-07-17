@@ -7,4 +7,5 @@ export interface Product {
   imagePath: string;
   createdAt: string;
   updatedAt: string;
+  category: {id: string, name: string}
 }

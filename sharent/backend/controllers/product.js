@@ -1,5 +1,6 @@
 const Product = require("../models").Product;
 const User = require("../models").User;
+const Category = require("../models").Category;
 const ProductEvaluation = require("../models").ProductEvaluation;
 
 exports.createProduct = (req, res, next) => {
@@ -9,6 +10,7 @@ exports.createProduct = (req, res, next) => {
   const productData = {
     UserId: req.body.UserId,
     product_name: req.body.product_name,
+    CategoryId: req.body.CategoryId,
     description: req.body.description,
     price: req.body.price,
     imagePath: url + "/images/" + req.file.filename
@@ -107,10 +109,13 @@ exports.getProducts = (req, res, next) => {
         $sort: { id: 1 },
         include: [{
             model: User
+          }, {
+            model: Category
           }]
         }
       )
       .then((fetchedProducts) => {
+        console.log(fetchedProducts);
         res.status(200).json({
           message: "Posts fetched successfully!",
           products: fetchedProducts, 
@@ -172,12 +177,12 @@ exports.getProduct = (req, res, next) => {
     },
     include: [{
       model: User,
-      attributes: ['id', 'first_name', 'last_name']
+      attributes: ['id', 'first_name', 'last_name', 'imagePath']
     }, {
       model: ProductEvaluation,
       include: [{
         model: User,
-        attributes: ['id', 'first_name', 'last_name'],
+        attributes: ['id', 'first_name', 'last_name', 'imagePath'],
       }]
     }]
   })

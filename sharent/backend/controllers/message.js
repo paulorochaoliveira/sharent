@@ -1,6 +1,8 @@
 const Message = require("../models").Message;
 const User = require("../models").User;
 const Sequelize = require('sequelize');
+const sequelize = require('../database/db.js');
+
 const Op = Sequelize.Op;
 
 exports.createMessage = (req, res, next) => {
