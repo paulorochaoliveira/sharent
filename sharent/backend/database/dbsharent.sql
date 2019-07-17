@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Jul 15, 2019 at 10:39 PM
+-- Generation Time: Jul 17, 2019 at 02:54 AM
 -- Server version: 5.7.25
 -- PHP Version: 7.3.1
 
@@ -13,6 +13,37 @@ SET time_zone = "+00:00";
 --
 -- Database: `dbsharent`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `categories`
+--
+
+CREATE TABLE `categories` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`id`, `name`, `createdAt`, `updatedAt`) VALUES
+(1, 'Jardinage', '2019-07-17 01:03:38', '2019-07-17 01:03:38'),
+(2, 'Art', '2019-07-17 01:04:32', '2019-07-17 01:04:32'),
+(3, 'Cuisine', '2019-07-17 01:06:44', '2019-07-17 01:06:44'),
+(4, 'Sport', '2019-07-17 01:07:35', '2019-07-17 01:07:35'),
+(5, 'Loisir', '2019-07-17 01:07:57', '2019-07-17 01:07:57'),
+(6, 'Rénovation', '2019-07-17 01:08:13', '2019-07-17 01:08:13'),
+(7, 'Vêtements', '2019-07-17 01:08:21', '2019-07-17 01:08:21'),
+(8, 'Électroniques', '2019-07-17 01:08:42', '2019-07-17 01:08:42'),
+(9, 'Bricolage', '2019-07-17 01:08:54', '2019-07-17 01:08:54'),
+(10, 'Meubles', '2019-07-17 01:09:06', '2019-07-17 01:09:06'),
+(11, 'Automobile', '2019-07-17 01:09:14', '2019-07-17 01:09:14'),
+(12, 'Divers', '2019-07-17 01:09:21', '2019-07-17 01:09:21');
 
 -- --------------------------------------------------------
 
@@ -118,23 +149,27 @@ CREATE TABLE `products` (
   `imagePath` varchar(255) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
-  `UserId` int(11) NOT NULL
+  `UserId` int(11) NOT NULL,
+  `CategoryId` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `product_name`, `description`, `price`, `imagePath`, `createdAt`, `updatedAt`, `UserId`) VALUES
-(10, 'Planche de Surf', ' La planche de surf pour débuter et progresser en toute sécurité. Livrée avec un leash et 3 ailerons non coupants. Mettre de la wax pour ne pas glisser.', '12.00', 'http://localhost:3000/images/planche-de-surf-1562718273678.jpg', '2019-07-10 00:24:33', '2019-07-10 00:24:33', 3),
-(11, 'Assassin\'s Creed', 'Assassin\'s creed pour PS4', '7.00', 'http://localhost:3000/images/assassin\'s-creed-1562718506189.jpg', '2019-07-10 00:28:26', '2019-07-10 00:28:26', 3),
-(12, 'Planche a Neige', 'Rien n\'est plus agréable que de trouver son rythme sur la montagne.', '8.00', 'http://localhost:3000/images/planche-a-neige-1562718604759.jpg', '2019-07-10 00:30:04', '2019-07-10 00:30:04', 3),
-(13, 'Fifa 19 pour PS4', 'Excellent jeu video.', '5.00', 'http://localhost:3000/images/fifa-19-pour-ps4-1562718662954.jpg', '2019-07-10 00:31:02', '2019-07-10 00:31:02', 3),
-(14, 'Vélo de route', 'Velo excellent pour la ville', '5.00', 'http://localhost:3000/images/vélo-de-route-1562718704323.jpg', '2019-07-10 00:31:44', '2019-07-10 00:31:44', 3),
-(15, 'Manteau Rouge', 'Belissimo Manteau Rouge da Zara', '7.00', 'http://localhost:3000/images/manteau-rouge-1562718935529.jpg', '2019-07-10 00:35:35', '2019-07-10 00:35:35', 3),
-(16, 'Balon de soccer', 'Balon de soccer', '5.00', 'http://localhost:3000/images/balon-de-soccer-1562719119318.jpg', '2019-07-10 00:38:39', '2019-07-10 00:38:39', 1),
-(17, 'Tondeuse', 'Tondeuse', '8.00', 'http://localhost:3000/images/tondeuse-1562719158420.jpg', '2019-07-10 00:39:18', '2019-07-10 00:39:18', 1),
-(18, 'Équipement de plongée', 'Equipement complet de plongée ', '30.00', 'http://localhost:3000/images/équipement-de-plongée-1562719364421.jpg', '2019-07-10 00:42:44', '2019-07-10 00:42:44', 1);
+INSERT INTO `products` (`id`, `product_name`, `description`, `price`, `imagePath`, `createdAt`, `updatedAt`, `UserId`, `CategoryId`) VALUES
+(10, 'Planche de Surf', ' La planche de surf pour débuter et progresser en toute sécurité. Livrée avec un leash et 3 ailerons non coupants. Mettre de la wax pour ne pas glisser.', '12.00', 'http://localhost:3000/images/planche-de-surf-1562718273678.jpg', '2019-07-10 00:24:33', '2019-07-10 00:24:33', 3, 4),
+(11, 'Assassin\'s Creed', 'Assassin\'s creed pour PS4', '7.00', 'http://localhost:3000/images/assassin\'s-creed-1562718506189.jpg', '2019-07-10 00:28:26', '2019-07-10 00:28:26', 3, 12),
+(12, 'Planche a Neige', 'Rien n\'est plus agréable que de trouver son rythme sur la montagne.', '8.00', 'http://localhost:3000/images/planche-a-neige-1562718604759.jpg', '2019-07-10 00:30:04', '2019-07-10 00:30:04', 3, 4),
+(13, 'Fifa 19 pour PS4', 'Excellent jeu video.', '5.00', 'http://localhost:3000/images/fifa-19-pour-ps4-1562718662954.jpg', '2019-07-10 00:31:02', '2019-07-10 00:31:02', 3, 12),
+(14, 'Vélo de route', 'Velo excellent pour la ville', '5.00', 'http://localhost:3000/images/vélo-de-route-1562718704323.jpg', '2019-07-10 00:31:44', '2019-07-10 00:31:44', 3, 4),
+(15, 'Manteau Rouge', 'Belissimo Manteau Rouge da Zara', '7.00', 'http://localhost:3000/images/manteau-rouge-1562718935529.jpg', '2019-07-10 00:35:35', '2019-07-10 00:35:35', 3, 7),
+(16, 'Balon de soccer', 'Balon de soccer', '5.00', 'http://localhost:3000/images/balon-de-soccer-1562719119318.jpg', '2019-07-10 00:38:39', '2019-07-10 00:38:39', 1, 4),
+(17, 'Tondeuse', 'Tondeuse', '8.00', 'http://localhost:3000/images/tondeuse-1562719158420.jpg', '2019-07-10 00:39:18', '2019-07-10 00:39:18', 1, 1),
+(18, 'Équipement de plongée', 'Equipement complet de plongée ', '30.00', 'http://localhost:3000/images/équipement-de-plongée-1562719364421.jpg', '2019-07-10 00:42:44', '2019-07-10 00:42:44', 1, 4),
+(19, 'Casque Bose', 'Réduction de bruit ultra performante Bluetooth et NFC avec invites vocales, Assistant Google intégré, Son équilibré, quel que soit le volume, Double microphone avec réduction de bruit pour un son plus clair durant vos appels.', '9.00', 'http://localhost:3000/images/casque-bose-1563329165317.jpg', '2019-07-17 02:06:05', '2019-07-17 02:06:05', 2, 8),
+(20, 'Raquette Tennis', 'Excellente raquette de tennis pour debutante.', '5.00', 'http://localhost:3000/images/raquette-tennis-1563330188234.jpg', '2019-07-17 02:23:08', '2019-07-17 02:23:08', 2, 4),
+(21, 'Raquettea de Ping-Pong', 'Excellentes raquettes.', '5.00', 'http://localhost:3000/images/raquettea-de-ping-pong-1563330311518.jpg', '2019-07-17 02:25:11', '2019-07-17 02:25:11', 2, 4);
 
 -- --------------------------------------------------------
 
@@ -154,7 +189,8 @@ INSERT INTO `SequelizeMeta` (`name`) VALUES
 ('20190706144513-create-user.js'),
 ('20190706145145-create-product.js'),
 ('20190706190254-create-message.js'),
-('20190711013713-create-product-evaluation.js');
+('20190711013713-create-product-evaluation.js'),
+('20190717001516-create-category.js');
 
 -- --------------------------------------------------------
 
@@ -196,6 +232,12 @@ INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `imag
 --
 
 --
+-- Indexes for table `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `messages`
 --
 ALTER TABLE `messages`
@@ -231,6 +273,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
@@ -246,7 +294,7 @@ ALTER TABLE `productevaluations`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `users`
