@@ -26,7 +26,7 @@ export class GridFullWidthComponent implements OnInit, OnChanges {
    private productsSub: Subscription;
    private authStatusSub: Subscription;
    categorySelected = 'all';
-   name = null;
+   name = '';
 
    constructor(public productsService: ProductsService, private authService: AuthService, public route: ActivatedRoute) {}
 

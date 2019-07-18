@@ -28,10 +28,17 @@
          <div class="mb-2">
             <img class="img-fluid rounded-circle shadow-lg" width="80" height="80" src="{{ userImagePathChild }}">
          </div>
-         <div class="">
+         <div class="mb-3">
             <h5 class="text-primary">{{ userNameChild }}</h5>
          </div>
       </div>
+      <div *ngIf="isAuth && userId != userIdChild" class="message-reply border-top pt-4">
+         <h5>Contactez le proprio</h5>
+         <form (submit)="onSaveMessage(messageForm)" #messageForm="ngForm" ngNativeValidate>
+              <textarea ngModel #evaluationInput="ngModel" name="content" id="content" cols="40" rows="3" placeholder="Votre message" class="form-control form-control-alternative mb-4"></textarea>
+              <button class="btn btn-primary" type="submit">Envoyez message</button>
+         </form>
+   </div>
       <!-- <ul class="listing-details-sidebar">
          <li><i class="fa fa-phone"></i> (123) 123-456</li>
          <li><i class="fa fa-external-link"></i> http://example.com</li>

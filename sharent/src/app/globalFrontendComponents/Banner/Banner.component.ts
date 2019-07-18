@@ -10,7 +10,7 @@ import { ProductsService } from 'src/app/listing/products.service';
 export class BannerComponent implements OnInit, OnChanges{
 
 
-  selectedCategory= 'all';
+  selectedCategory = 'all';
   name = '';
   categories: {id: string, name: string}[] = [];
 
