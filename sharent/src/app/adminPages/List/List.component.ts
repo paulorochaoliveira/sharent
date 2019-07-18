@@ -31,7 +31,7 @@ export class ListComponent implements OnInit{
       // this.isLoading = true;
       this.currentPage = pageData.pageIndex + 1;
       this.productsPerPage = pageData.pageSize;
-      this.productsService.getProducts(this.productsPerPage, this.currentPage);
+      this.productsService.getProducts(this.productsPerPage, this.currentPage, null, null);
    }
 
    ngOnInit() {
