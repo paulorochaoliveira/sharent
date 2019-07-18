@@ -8,28 +8,25 @@
             <!-- Search -->
             <div class="col-md-12 grid-full-width page-search mb-3">
                <div class="main-search-input mt-0">
-                  <div class="col-lg-3 col-sm-6">
+                  <div class="col-lg-4 col-sm-4">
                      <div class="form-group">
-                        <input type="text" placeholder="Que recherchez-vous?" class="form-control">
+                        <input type="text" placeholder="Que recherchez-vous?" class="form-control" [value]="name" (input)="name = $event.target.value">
                      </div>
                   </div>
-                  <div class="col-lg-3 col-sm-6">
+                  <!-- <div class="col-lg-3 col-sm-6">
                      <div class="form-group">
                         <input type="text" placeholder="Lieu" class="form-control">
                      </div>
-                  </div>
-                  <div class="col-lg-3 col-sm-6">
-                     <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
-                     <option>Par catégorie</option>
-                     <option>Jardin</option>
-                     <option>Rénovation</option>
-                     <option>Décoration</option>
-                     <option>Sport</option>
-                     <option>Mécanique</option>
+                  </div> -->
+                  <div class="col-lg-4 col-sm-4">
+                     <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref" (change)="onSelectCategory($event.target.value)">
+                        <option>Par catégorie</option>
+                        <option *ngFor="let category of productsService.getCategoriesList()" [value]="category.id" [selected]="category.id == categorySelected ? true : null" >{{ category.name }}</option>
                      </select>
                   </div>
-                  <div class="col-lg-3 col-sm-6 text-right">
-                     <a class="btn main-search-btn btn-radius btn-lg btn-primary text-white"><span class="btn-inner--text">Rechercher</span></a>
+                  <div class="col-lg-4 col-sm-4 text-right">
+                     <a class="btn main-search-btn btn-radius btn-lg btn-primary text-white"[routerLink]="['/listing/grid/full-width', categorySelected , name ]">
+                        <span class="btn-inner--text">Rechercher</span></a>
                   </div>
                </div>
             </div>
@@ -41,7 +38,7 @@
                      <!-- Layout Switcher -->
                      <div class="layout-switcher">
                         <a class="grid active"><span class="round-pill d-block"><i class="fa fa-th"></i></span></a>
-                        <a [routerLink]="['/listing/list/full-width']" class="list"><span class="round-pill d-block"><i class="fa fa-align-justify"></i></span></a>
+                        <a [routerLink]="['/listing/list/full-width', categorySelected, name ]" class="list"><span class="round-pill d-block"><i class="fa fa-align-justify"></i></span></a>
                      </div>
                   </div>
                   <div class="col-md-6">

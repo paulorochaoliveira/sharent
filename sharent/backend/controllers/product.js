@@ -1,7 +1,10 @@
+const Sequelize = require('sequelize');
 const Product = require("../models").Product;
 const User = require("../models").User;
 const Category = require("../models").Category;
 const ProductEvaluation = require("../models").ProductEvaluation;
+
+const Op = Sequelize.Op;
 
 exports.createProduct = (req, res, next) => {
   const url = req.protocol + "://" + req.get("host");
@@ -91,17 +94,43 @@ exports.updateProduct = (req, res, next) => {
 // };
 
 exports.getProducts = (req, res, next) => {
+
+  var whereStatement = {};
+  
+  if(req.query.name && req.query.name != 'null') {
+    whereStatement = {
+      [Op.or]: [
+        {
+          product_name: {
+            [Op.like]: '%' + req.query.name + '%'
+          }
+        },
+        {
+          description: {
+            [Op.like]: '%' + req.query.name + '%'
+          }
+        }
+      ]
+    }
+  }
+      
+  if(req.query.category && req.query.category != 'all' && req.query.category != 'undefined') {
+    whereStatement.CategoryId = req.query.category;
+  }
+
+  console.log(whereStatement);
+      
   let limit = +req.query.pagesize;   // number of records per page
   let offset = 0;
   let count = 0;
-  Product.findAndCountAll()
+  Product.findAndCountAll({where: whereStatement})
     .then((data) => {
       let page = +req.query.page;      // page number
       
       count = data.count;
-      console.log(count);
       // let pages = Math.ceil(data.count / limit);
 		  offset = limit * (page - 1);
+      
       Product.findAll({
         // attributes: ['id', 'first_name', 'last_name', 'date_of_birth'],
         limit: limit,
@@ -111,11 +140,12 @@ exports.getProducts = (req, res, next) => {
             model: User
           }, {
             model: Category
-          }]
+          }],
+          where: whereStatement
         }
       )
       .then((fetchedProducts) => {
-        console.log(fetchedProducts);
+        // console.log(fetchedProducts);
         res.status(200).json({
           message: "Posts fetched successfully!",
           products: fetchedProducts, 

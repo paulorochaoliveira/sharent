@@ -19,8 +19,8 @@ export class ProductsService {
 
   constructor(private http: HttpClient, private router: Router, public authService: AuthService) {}
 
-  getProducts(productsPerPage: number, currentPage: number) {
-    const queryParams = `?pagesize=${productsPerPage}&page=${currentPage}`;
+  getProducts(productsPerPage: number, currentPage: number, category: string, name: string) {
+    const queryParams = `?pagesize=${productsPerPage}&page=${currentPage}&category=${category}&name=${name}`;
     this.http
       .get<{ message: string; products: any; maxProducts: number }>(
         BACKEND_URL + queryParams
