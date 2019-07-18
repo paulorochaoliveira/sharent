@@ -54,8 +54,6 @@ export class ListingDetailTwoComponent implements OnInit {
       private authService: AuthService
     ) {}
 
-
-
    ngOnInit() {
       this.route.paramMap.subscribe((paramMap: ParamMap) => {
          this.userAuth = this.authService.getUserId();
@@ -63,7 +61,6 @@ export class ListingDetailTwoComponent implements OnInit {
            this.productId = paramMap.get('id');
            this.isLoading = true;
            this.productsService.getProduct(this.productId).subscribe(productData => {
-               console.log(productData);
                this.isLoading = false;
                this.userId = productData.User.id;
                this.userName = productData.User.first_name + ' ' + productData.User.last_name;
@@ -81,8 +78,6 @@ export class ListingDetailTwoComponent implements OnInit {
                   category: productData.Category
                };
              console.log(this.product);
-            //  this.userName = productData.User.first_name + ' ' + productData.User.last_name;
-
            });
          }
       });
@@ -97,10 +92,7 @@ export class ListingDetailTwoComponent implements OnInit {
       if (form.invalid) {
          return;
       }
-      // console.log(form.value.evaluation);
-      // console.log(this.rating);
-      // console.log(this.userAuth);
-      // console.log(this.productId);
+
       this.productsService
       .addProductEvaluation(this.rating.toString(), form.value.evaluation, this.productId, this.userAuth);
       this.productsService.getProduct(this.productId).subscribe(productData => {

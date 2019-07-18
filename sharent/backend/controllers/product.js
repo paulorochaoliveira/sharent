@@ -208,7 +208,9 @@ exports.getProduct = (req, res, next) => {
     include: [{
       model: User,
       attributes: ['id', 'first_name', 'last_name', 'imagePath']
-    }, {
+    },
+    { model: Category},
+    {
       model: ProductEvaluation,
       include: [{
         model: User,

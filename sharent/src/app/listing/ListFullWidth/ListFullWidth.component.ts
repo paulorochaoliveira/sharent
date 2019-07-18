@@ -25,7 +25,7 @@ export class ListFullWidthComponent implements OnInit, OnChanges{
    private productsSub: Subscription;
    private authStatusSub: Subscription;
    categorySelected: string;
-   name = null;
+   name = '';
 
    constructor(public productsService: ProductsService, private authService: AuthService, public route: ActivatedRoute) {}
 
