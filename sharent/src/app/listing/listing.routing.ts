@@ -5,12 +5,20 @@ import { ListingDetailTwoComponent } from './ListingDetailTwo/ListingDetailTwo.c
 
 export const ListingRoutes: Routes = [
 {
+  path: 'grid/full-width/:category/:name',
+  component: GridFullWidthComponent
+},
+{
   path: 'grid/full-width',
   component: GridFullWidthComponent
 },
 {
   path: 'detail/version2/:id',
   component: ListingDetailTwoComponent
+},
+{
+  path: 'list/full-width/:category/:name',
+  component: ListFullWidthComponent
 },
 {
   path: 'list/full-width',

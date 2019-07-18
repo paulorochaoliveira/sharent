@@ -4,6 +4,7 @@ import { AgmCoreModule } from '@agm/core';
 import { RouterModule } from '@angular/router';
 import { BarRatingModule } from "ngx-bar-rating";
 import { SlickModule } from 'ngx-slick';
+import { FormsModule } from '@angular/forms';
 
 import { MapBannerComponent } from '../globalFrontendComponents/MapBanner/MapBanner.component'; 
 import { TitleBarComponent } from '../globalFrontendComponents/TitleBar/TitleBar.component'; 
@@ -18,6 +19,7 @@ import { ParallaxComponent } from './ParallaxSection/Parallax.component';
    CommonModule,
    RouterModule,
    BarRatingModule,
+   FormsModule,
    SlickModule.forRoot(),
    AgmCoreModule.forRoot({apiKey: 'AIzaSyBtdO5k6CRntAMJCF-H5uZjTCoSGX95cdk'})],
   declarations: [

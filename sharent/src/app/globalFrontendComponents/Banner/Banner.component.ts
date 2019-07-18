@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, Output, AfterViewInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, Input, Output, AfterViewInit, ViewEncapsulation, OnChanges } from '@angular/core';
+import { ProductsService } from 'src/app/listing/products.service';
 
 @Component({
   selector: 'banner-version1',
@@ -6,7 +7,12 @@ import { Component, OnInit, Input, Output, AfterViewInit, ViewEncapsulation } fr
   styleUrls: ['./Banner.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class BannerComponent implements OnInit {
+export class BannerComponent implements OnInit, OnChanges{
+
+
+  selectedCategory= 'all';
+  name = '';
+  categories: {id: string, name: string}[] = [];
 
    /** Title for baner **/
    @Input('title') Title: any = 'Dummy Title';
@@ -17,12 +23,23 @@ export class BannerComponent implements OnInit {
    /** Background for baner **/
    @Input('bgImageUrl') BgImageUrl: any = 'assets/images/main-search-background-01.jpg';
 
-   constructor(){}
+   constructor(public productsService: ProductsService) {}
 
-   ngOnInit(){}
+   ngOnChanges() {
+     this.productsService.getCategories();
+   }
+
+   ngOnInit() {
+
+    this.categories = this.productsService.getCategoriesList();
+   }
 
    ngAfterViewInit()
    {
 
+   }
+
+   onSelectCategory(categoryId: any) {
+     this.selectedCategory = categoryId;
    }
 }
