@@ -77,10 +77,11 @@ export class AddListComponent implements OnInit, AfterViewInit, OnDestroy {
             imagePath: productData.imagePath,
             createdAt: productData.createdAt,
             updatedAt: productData.updatedAt,
-            category: null
+            category: productData.Category
           };
           this.form.setValue({
             product_name: this.product.product_name,
+            CategoryId: this.product.category.id,
             description: this.product.description,
             price: this.product.price,
             image: this.product.imagePath

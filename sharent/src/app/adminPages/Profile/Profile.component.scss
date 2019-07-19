@@ -11,3 +11,34 @@
         }
     }
 }
+
+input[type="file"] {
+    visibility: hidden;
+  }
+  
+  .image-preview {
+    height: 5rem;
+    
+  }
+  
+  .image-preview img {
+    height: 100%;
+  }
+
+.add-listing-section {
+    border-radius: 4px;
+    background-color: #fff;
+    box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.06);
+    padding: 0px 0px 0px 0px;
+}
+
+.add-listing-section textarea {
+    min-height: 200px;
+    margin-bottom: 35px;
+    max-width: 500px;
+}
+
+.add-listing-section .row.with-forms textarea, .add-listing-section .row.with-forms input, .add-listing-section .row.with-forms select, .add-listing-section .row.with-forms .chosen-container {
+    margin-bottom: 22px;
+    max-width: 500px;
+}

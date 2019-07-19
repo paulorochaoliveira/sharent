@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const User = require("../models").User;
+const Address = require("../models").Address;
 
 exports.createUser = (req, res, next) => {
      // const today = new Date();
@@ -83,21 +84,64 @@ exports.userLogin = (req, res, next) => {
 }
 
 exports.getUser = (req, res, next) => {
-  var decoded = jwt.verify(req.headers['authorization'], process.env.JWT_KEY)
+  const token = req.headers.authorization.split(" ")[1];
+    const decodedToken = jwt.verify(token, process.env.JWT_KEY);
+    req.userData = { email: decodedToken.email, UserId: decodedToken.UserId };
 
   User.findOne({
     where: {
-      id: decoded.id
-    }
+      id: req.userData.UserId
+    },
+    include: [{
+      model: Address
+    }]
   })
     .then(user => {
       if (user) {
-        res.json(user)
+        res.status(200).json({
+          message: 'Success',
+          user: user
+        })
       } else {
-        res.send('User does not exist')
+        res.status(401).json({
+          message: "Invalid authentication credentials!"
+        });
       }
     })
     .catch(err => {
-      res.send('error: ' + err)
+      res.status(401).json({
+        message: "Invalid authentication credentials!"
+      });
     })
 }
+
+exports.updateUser = (req, res, next) => {
+  let imagePath = req.body.imagePath;
+  if (req.file) {
+    const url = req.protocol + "://" + req.get("host");
+    imagePath = url + "/images/" + req.file.filename;
+  }
+  const userData = {
+    first_name: req.body.first_name,
+    last_name: req.body.last_name,
+    imagePath: imagePath
+  };
+  User.update(userData, {
+    where : {
+      id: req.body.id
+    }})
+    .then(result => {
+      console.log(result[0]);
+      if (result[0] > 0) {
+        res.status(200).json({ 
+          message: "Update successful!" });
+      } else {
+        res.status(401).json({ message: "Not authorized!" });
+      }
+    })
+    .catch(error => {
+      res.status(500).json({
+        message: "Couldn't udpate User!"
+      });
+    });
+};

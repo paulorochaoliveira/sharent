@@ -3,6 +3,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { AuthService } from 'src/app/session/auth.service';
+import { User } from 'src/app/session/user.model';
 
 @Component({
   selector: 'app-header',
@@ -16,19 +17,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
    url: string;
 
    private userName: string;
-   user: {id: string, first_name: string, last_name: string, email: string, imagePath: string};
+   user: User;
 
    isFixedClass = false;
 
    userIsAuthenticated = false;
    private authListenerSubs: Subscription;
 
-  constructor(private authService: AuthService) {}
+  constructor(public authService: AuthService) {}
 
    ngOnInit() {
       this.userName = this.authService.getUserFullName();
       this.userIsAuthenticated = this.authService.getIsAuth();
-      this.user = this.authService.getAuthUser();
+      this.user = this.authService.getUserAuth();
       console.log(this.userIsAuthenticated);
 
       this.authListenerSubs = this.authService
@@ -37,6 +38,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.userIsAuthenticated = isAuthenticated;
 
       });
+      this.authListenerSubs = this.authService.getAuthUserListener()
+      .subscribe(user => {
+        this.userName = user.first_name + ' ' + user.last_name;
+      })
+      
    }
 
    getUserImagePath() {
