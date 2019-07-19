@@ -25,6 +25,9 @@ export class ListingDetailTwoComponent implements OnInit {
    userName: string;
    userImagePath: string;
    ProductEvaluations: [];
+   latitude: string;
+   longitude: string;
+   googleMaps:string;
 
    private productId: string;
    private authStatusSub: Subscription;
@@ -66,6 +69,9 @@ export class ListingDetailTwoComponent implements OnInit {
                this.userName = productData.User.first_name + ' ' + productData.User.last_name;
                this.ProductEvaluations = productData.ProductEvaluations;
                this.userImagePath = productData.User.imagePath;
+               this.latitude = productData.User.Address.latitude;
+               this.longitude = productData.User.Address.longitude;
+               this.googleMaps = "https://maps.google.com/maps?q='45.471026','-73.638541'&hl=en;z=14&amp;output=embed";
                this.product = {
                   id: productData.id,
                   UserId: productData.UserId,
@@ -75,9 +81,10 @@ export class ListingDetailTwoComponent implements OnInit {
                   imagePath: productData.imagePath,
                   createdAt: productData.createdAt,
                   updatedAt: productData.updatedAt,
-                  category: productData.Category
+                  category: productData.Category,
                };
              console.log(this.product);
+             console.log(this.googleMaps);
            });
          }
       });

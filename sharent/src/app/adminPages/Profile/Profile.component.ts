@@ -72,8 +72,8 @@ export class ProfileComponent implements OnInit {
       return;
     }
 
-    // this.authService.updateUser(this.userAuth.id, this.form.value.first_name, this.form.value.last_name, this.form.value.image);
-    if (this.userAuth.Address) {
+    this.authService.updateUser(this.userAuth.id, this.form.value.first_name, this.form.value.last_name, this.form.value.image);
+    if (this.userAuth.Address.UserId) {
       this.authService.updateAddress(this.form.value.civicNumber, this.form.value.apto, this.form.value.streetName,
         this.form.value.city, this.form.value.province, this.form.value.postalCode, this.userAuth.id);
     } else {

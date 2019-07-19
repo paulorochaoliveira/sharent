@@ -8,6 +8,7 @@ const checkAuth = require("../middleware/check-auth");
 const router = express.Router();
 
 router.post("",  AddressController.createAddress);
+router.put("/update",  AddressController.updateAddress);
 
 // router.put("/:id", checkAuth, extractFile, ProductController.updateProduct);
 

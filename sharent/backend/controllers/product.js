@@ -3,6 +3,7 @@ const Product = require("../models").Product;
 const User = require("../models").User;
 const Category = require("../models").Category;
 const ProductEvaluation = require("../models").ProductEvaluation;
+const Address = require("../models").Address;
 
 const Op = Sequelize.Op;
 
@@ -207,7 +208,10 @@ exports.getProduct = (req, res, next) => {
     },
     include: [{
       model: User,
-      attributes: ['id', 'first_name', 'last_name', 'imagePath']
+      attributes: ['id', 'first_name', 'last_name', 'imagePath'],
+      include: [{
+        model: Address
+      }]
     },
     { model: Category},
     {

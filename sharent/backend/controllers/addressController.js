@@ -58,6 +58,49 @@ exports.createAddress = (req, res, next) => {
   };
 };
 
+exports.updateAddress = (req, res, next) => {
+  const Http = new XMLHttpRequest();
+  const url='http://www.mapquestapi.com/geocoding/v1/address?key=fxvCuNIQCRXGAYwnhul8P1Mmfad16tEP&location='+req.body.postalCode;
+  Http.open("GET", url);
+  Http.send();
+  Http.onreadystatechange = function() {
+    if(this.readyState == 4 && this.status == 200) {
+      let result = JSON.parse(Http.responseText);
+      let latitude = result.results[0].locations[0].latLng.lat;
+      let longitude = result.results[0].locations[0].latLng.lng;
+  
+      const addressData = {
+        civicNumber: req.body.civicNumber,
+        apto: req.body.apto,
+        streetName: req.body.streetName,
+        city: req.body.city,
+        province: req.body.province,
+        postalCode: req.body.postalCode,
+        latitude: latitude,
+        longitude: longitude
+      };
+      Address
+        .update(addressData, {
+              where : {
+                UserId: req.body.UserId
+              }})
+        .then(createdAddress => {
+          res.status(201).json({
+            message: "Address added successfully",
+            Address: createdAddress
+          });
+        })
+        .catch(error => {
+          res.status(500).json({
+            message: "Creating an Address failed!",
+            error: error
+          });
+        });
+    }
+  };
+};
+
+
 // exports.getCategory = (req, res, next) => {
 //     Product.findOne({
 //       where: {
