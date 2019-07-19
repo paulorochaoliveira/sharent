@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Jul 17, 2019 at 02:54 AM
+-- Generation Time: Jul 19, 2019 at 05:27 AM
 -- Server version: 5.7.25
 -- PHP Version: 7.3.1
 
@@ -13,6 +13,37 @@ SET time_zone = "+00:00";
 --
 -- Database: `dbsharent`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `addresses`
+--
+
+CREATE TABLE `addresses` (
+  `id` int(11) NOT NULL,
+  `civicNumber` int(11) DEFAULT NULL,
+  `streetName` varchar(255) DEFAULT NULL,
+  `apto` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `province` varchar(255) DEFAULT NULL,
+  `postalCode` varchar(255) DEFAULT NULL,
+  `latitude` decimal(10,8) DEFAULT NULL,
+  `longitude` decimal(11,8) DEFAULT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  `UserId` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `addresses`
+--
+
+INSERT INTO `addresses` (`id`, `civicNumber`, `streetName`, `apto`, `city`, `province`, `postalCode`, `latitude`, `longitude`, `createdAt`, `updatedAt`, `UserId`) VALUES
+(1, 5080, 'WestHill', NULL, 'Montreal', 'Quebec', 'H4V2W5', NULL, NULL, '2019-07-18 00:00:00', '2019-07-18 00:00:00', 1),
+(2, 5080, 'WestHill', NULL, 'Montreal', 'Quebec', 'H4V2W5', NULL, NULL, '2019-07-18 00:00:00', '2019-07-18 00:00:00', 2),
+(3, 11, 'Pie-IX', '', 'Montreal', 'Quebec', 'H1M1B1', NULL, NULL, '2019-07-19 04:47:41', '2019-07-19 04:47:41', 3),
+(4, 123, 'Pabufe', '', 'Olinda', 'Pernambuco', 'H4S2W5', '45.49072300', '-73.74387100', '2019-07-19 05:05:19', '2019-07-19 05:05:19', 4);
 
 -- --------------------------------------------------------
 
@@ -102,7 +133,8 @@ INSERT INTO `messages` (`id`, `receiver`, `title`, `content`, `isRead`, `created
 (33, 3, 'Title', 'Vamos la', '0', '2019-07-14 23:58:24', '2019-07-14 23:58:24', 1),
 (34, 1, 'Title', 'Tentantiva numero 50', '0', '2019-07-15 00:02:11', '2019-07-15 00:02:11', 3),
 (35, 3, 'Title', 'Alo Julien', '0', '2019-07-15 00:02:50', '2019-07-15 00:02:50', 1),
-(36, 1, 'Title', 'te amo\r\n', '0', '2019-07-15 00:08:33', '2019-07-15 00:08:33', 2);
+(36, 1, 'Title', 'te amo\r\n', '0', '2019-07-15 00:08:33', '2019-07-15 00:08:33', 2),
+(37, 3, 'Title', 'Allo!!', '0', '2019-07-18 19:07:17', '2019-07-18 19:07:17', 1);
 
 -- --------------------------------------------------------
 
@@ -190,7 +222,8 @@ INSERT INTO `SequelizeMeta` (`name`) VALUES
 ('20190706145145-create-product.js'),
 ('20190706190254-create-message.js'),
 ('20190711013713-create-product-evaluation.js'),
-('20190717001516-create-category.js');
+('20190717001516-create-category.js'),
+('20190718225130-create-address.js');
 
 -- --------------------------------------------------------
 
@@ -215,7 +248,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `imagePath`, `createdAt`, `updatedAt`) VALUES
 (1, 'Paulo', 'Oliveira', 'paulo@mail.com', '$2b$10$oQE6UpwBABirs0hGXpNezO6ejbxPUE9UlvK3fwa3stDmoX1cM9GZe', 'http://localhost:3000/images/paulo.jpg', '2019-07-06 19:58:35', '2019-07-06 19:58:35'),
-(2, 'Edja', 'Andrade', 'edja@mail.com', '$2b$10$ps9Qxm1I.U/If2prg6M.oeEBEeGwJf0FnMLNf0jvddPbE5JJRtf4W', 'http://localhost:3000/images/edja.jpg', '2019-07-06 21:02:45', '2019-07-06 21:02:45'),
+(2, 'Edja', 'Andrade', 'edja@mail.com', '$2b$10$ps9Qxm1I.U/If2prg6M.oeEBEeGwJf0FnMLNf0jvddPbE5JJRtf4W', 'http://localhost:3000/images/edja.jpg', '2019-07-06 21:02:45', '2019-07-19 03:51:19'),
 (3, 'Julien', 'Oullet', 'julien@hotmail.com', '$2b$10$Zk3LcGZtkb/xorPlc2vpa.Tgx8.DzQ4WM87EF8sZVWlBD/7l89F2e', 'http://localhost:3000/images/julien.jpg', '2019-07-10 00:08:26', '2019-07-10 00:08:26'),
 (4, 'Maria', 'Oliveira', 'maria@mail', '$2b$10$K9w0ehhiq6XDq2cbPBxmRO4yX4fSiaY8z0M4ZGVw9GsjKgWEU9Yqy', 'http://localhost:3000/images/maria.jpg', '2019-07-13 15:30:21', '2019-07-13 15:30:21'),
 (5, 'Mana', 'Athayde', 'mana@mail.com', '$2b$10$/ZbvLzUYnSs5y1mqRhL2M.mScdjd5kIA4B0fW9CjtOxWSB3EC1fHa', 'http://localhost:3000/images/default-user.png', '2019-07-14 14:54:19', '2019-07-14 14:54:19'),
@@ -230,6 +263,12 @@ INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `imag
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `addresses`
+--
+ALTER TABLE `addresses`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `categories`
@@ -273,6 +312,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `addresses`
+--
+ALTER TABLE `addresses`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
@@ -282,7 +327,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `productevaluations`
