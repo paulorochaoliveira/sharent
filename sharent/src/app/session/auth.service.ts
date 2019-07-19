@@ -5,6 +5,8 @@ import { Subject } from 'rxjs';
 
 import { AuthData } from './auth-data.model';
 import { environment } from '../../environments/environment';
+import { User } from './user.model';
+import { Address } from './address.model';
 
 const BACKEND_URL = environment.apiUrl + '/user/';
 
@@ -18,9 +20,12 @@ export class AuthService {
     private userFirstName: string;
     private userLastName: string;
     private authStatusListener = new Subject<boolean>();
+    private authUserListener = new Subject<User>();
+
     private loginFailed = false;
     private user: {id: string, first_name: string, last_name: string, email: string, imagePath: string};
     private userEmail: string;
+    private userAuth: User;
 
     constructor(private http: HttpClient, private router: Router) {}
     
@@ -44,12 +49,20 @@ export class AuthService {
       return this.authStatusListener.asObservable();
     }
 
+    getAuthUserListener() {
+      return this.authUserListener.asObservable();
+    }
+
     getLoginFailed() {
       return this.loginFailed;
     }
 
     getAuthUser() {
       return this.user;
+    }
+
+    getUserAuth() {
+      return this.userAuth;
     }
 
     createUser(last_name: string, first_name: string, email: string, password: string) {
@@ -65,6 +78,46 @@ export class AuthService {
                 this.authStatusListener.next(false);
             }
         );
+    }
+
+    // tslint:disable-next-line: max-line-length
+    createAddress(civicNumber: string, apto: string, streetName: string, city: string, province: string, postalCode: string, UserId: string) {
+      const  addressData: Address = {
+        civicNumber: civicNumber,
+        apto: apto,
+        streetName: streetName,
+        city: city,
+        province: province,
+        postalCode: postalCode,
+        UserId: UserId,
+        latitude: null,
+        longitude: null,
+      };
+      this.http.post('http://localhost:3000/api/address', addressData)
+          .subscribe(response => {
+              console.log(response);
+          }
+      );
+    }
+
+    updateAddress(civicNumber: string, apto: string, streetName : string,
+      city: string, province: string, postalCode: string, UserId: string){
+        const  addressData: Address = {
+          civicNumber: civicNumber,
+          apto: apto,
+          streetName: streetName,
+          city: city,
+          province: province,
+          postalCode: postalCode,
+          UserId: UserId,
+          latitude: null,
+          longitude: null,
+        };
+        this.http.put('http://localhost:3000/api/address/update', addressData)
+          .subscribe(response => {
+              console.log(response);
+          }
+      );
     }
 
     login(email: string, password: string) {
@@ -87,7 +140,7 @@ export class AuthService {
                 this.userLastName = response.userLastName;
                 this.userFirstName = response.userFirstName;
                 this.userEmail = email;
-                
+                this.getUser();
                 this.user = {
                   id: this.UserId,
                   first_name: this.userFirstName,
@@ -115,6 +168,48 @@ export class AuthService {
             }
           );
       }
+
+      updateUser(id: string, first_name: string, last_name: string, image: File | string) {
+        let userData: User | FormData;
+        if (typeof image === 'object') {
+          userData = new FormData();
+          userData.append('id', id);
+          userData.append('first_name', first_name);
+          userData.append('last_name', last_name);
+          userData.append('image', image, first_name + ' ' + last_name);
+        } else {
+          userData = {
+            id: id,
+            first_name: first_name,
+            last_name: last_name,
+            imagePath: image,
+            email: null,
+            password: null,
+            Address: null
+          };
+        }
+        console.log(userData);
+        this.http.put(BACKEND_URL + '/update', userData).subscribe(userData => {
+          console.log(userData);
+          this.getUser();
+          this.authUserListener.next(this.userAuth);
+          this.router.navigate(['/admin/list']);
+          // this.userAuth = userData;
+        });
+      }
+
+
+      getUser() {
+        this.http.get<{ message: string; user: User}>(
+          BACKEND_URL + '/profile'
+        ).subscribe(userData => {
+          console.log(userData);
+          this.userAuth = userData.user;
+          this.userFirstName = userData.user.first_name;
+          this.userLastName = userData.user.last_name;
+
+        });
+      }
     
       autoAuthUser() {
         const authInformation = this.getAuthData();
@@ -139,6 +234,7 @@ export class AuthService {
             imagePath: authInformation.imagePath
           };
           console.log(this.user);
+          this.getUser();
         }
       }
     

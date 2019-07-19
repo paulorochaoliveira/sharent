@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     // User has many products
     User.hasMany(models.Product);
     User.hasMany(models.Message);
+    User.hasOne(models.Address);
 
   };
   return User;

@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/session/auth.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { User } from 'src/app/session/user.model';
 
 @Component({
   selector: 'app-admin-header',
@@ -18,12 +19,12 @@ export class AdminHeaderComponent implements OnInit, OnDestroy {
 
   isFixedClass: boolean = false;
   private userName: string;
-  user: {id: string, first_name: string, last_name: string, email: string, imagePath: string};
+  user: User;
   
   userIsAuthenticated = false;
   private authListenerSubs: Subscription;
 
- constructor(private authService: AuthService) {}
+ constructor(public authService: AuthService) {}
 
   ngOnInit() {
      // this._router = this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
@@ -38,12 +39,12 @@ export class AdminHeaderComponent implements OnInit, OnDestroy {
      // });
      this.userIsAuthenticated = this.authService.getIsAuth();
      this.userName = this.authService.getUserFullName();
-     this.user = this.authService.getAuthUser();
+     this.user = this.authService.getUserAuth();
      this.authListenerSubs = this.authService
      .getAuthStatusListener()
      .subscribe(isAuthenticated => {
        this.userIsAuthenticated = isAuthenticated;
-       this.user = this.authService.getAuthUser();
+       this.user = this.authService.getUserAuth();
      });
      console.log(this.user.imagePath);
   }
