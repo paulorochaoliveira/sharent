@@ -30,7 +30,7 @@
     "core-js": "^2.5.7",
     "cors": "^2.8.5",
     "counterup": "^1.0.2",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "hammerjs": "^2.0.8",
     "jquery-ui": "^1.12.1",
     "jquery.countdown": "^1.2.8",
